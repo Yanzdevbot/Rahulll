@@ -30,7 +30,7 @@ export default function Home() {
                         yang dapat digunakan untuk mengelola dan menyediakan data melalui
                         protokol <strong>HTTP</strong> secara efisien dan terstruktur.
                     </p>
-                    <Link href="/user/dashboard" className="mt-4">
+                    <Link href="/dashboard" className="mt-4">
                         <button className="font-bold bg-[#483AA0] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 mt-10">
                             Go to Dashboard
                         </button>
