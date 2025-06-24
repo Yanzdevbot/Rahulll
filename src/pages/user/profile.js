@@ -90,7 +90,7 @@ export default function Profile() {
                 <div className="mt-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-20">
                         <div className="flex flex-col">
-                            <label className="block text-xl mb-2" htmlFor="name">Username</label>
+                            <label className="block text-sm md:text-md lg:text-xl mb-2" htmlFor="name">Username</label>
                             <div className="flex flex-row">
                                 <input
                                     type="text"
@@ -113,7 +113,7 @@ export default function Profile() {
                             </div>
                         </div>
                         <div className="flex flex-col mb-5">
-                            <label className="block text-xl mb-2" htmlFor="apikey">API Key</label>
+                            <label className="block text-sm md:text-md lg:text-xl mb-2" htmlFor="apikey">API Key</label>
                             <div className="flex flex-row">
                                 <input
                                     type="text"
