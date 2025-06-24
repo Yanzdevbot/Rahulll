@@ -5,10 +5,37 @@
   ],
   "features": [
     {
-      "name": "otakudesu",
+      "name": "otakudesu-detail",
       "method": "GET",
       "folder": "anime",
-      "desc": "Get Anime Info from Otakudesu",
+      "desc": "Get Detail Anime Info from Otakudesu",
+      "query": "url",
+      "example": "?url=https://otakudesu.cloud/anime/compass-20-sub-indo",
+      "status": "true"
+    },
+    {
+      "name": "otakudesu-download",
+      "method": "GET",
+      "folder": "anime",
+      "desc": "Download Anime Info from Otakudesu",
+      "query": "url",
+      "example": "?url=https://otakudesu.cloud/episode/c20-sks-episode-12-sub-indo",
+      "status": "true"
+    },
+    {
+      "name": "otakudesu-ongoing",
+      "method": "GET",
+      "folder": "anime",
+      "desc": "Get Ongoing Anime Info from Otakudesu",
+      "query": "",
+      "example": "",
+      "status": "true"
+    },
+    {
+      "name": "otakudesu-search",
+      "method": "GET",
+      "folder": "anime",
+      "desc": "Search Anime Info from Otakudesu",
       "query": "query",
       "example": "?query=one%20piece",
       "status": "true"
