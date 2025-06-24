@@ -1,9 +1,9 @@
-import { loadFeatureCache } from '../../../../lib/initFeature';
+import loadCache from '../../../../lib/initFeature';
 
 let featureCache = null;
 
 (async () => {
-    featureCache = await loadFeatureCache();
+    featureCache = await loadCache();
 })();
 
 export default async function handler(req, res) {
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         const { type } = req.query;
 
         if (!featureCache) {
-            featureCache = await loadFeatureCache();
+            featureCache = await loadCache();
         }
 
         if (type) {
