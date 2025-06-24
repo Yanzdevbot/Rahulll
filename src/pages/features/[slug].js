@@ -6,9 +6,22 @@ import { useUser } from "@/context/userContext";
 
 export default function Slug() {
     const router = useRouter();
+    const [search, setSearch] = useState("");
+    const [originalFolders, setOriginalFolders] = useState([]);
     const [folders, setFolders] = useState([]);
     const { slug } = router.query;
     const dataUser = useUser();
+
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        setSearch(value);
+        if (!value) {
+            setFolders(originalFolders);
+            return;
+        }
+        const filteredFolders = originalFolders.filter((folder) => folder.name.toLowerCase().includes(value.toLowerCase()) || folder.folder.toLowerCase().includes(value.toLowerCase()));
+        setFolders(filteredFolders);
+    }
 
     useEffect(() => {
         if (!slug) return;
@@ -18,6 +31,7 @@ export default function Slug() {
             method: "GET",
         }).then((res) => res.json())
             .then((data) => {
+                setOriginalFolders(slug === "all" ? data.features : data);
                 setFolders(slug === "all" ? data.features : data);
             });
     }, [slug]);
@@ -26,7 +40,7 @@ export default function Slug() {
         <div className="min-h-screen">
             <Navbar />
             <div className="overflow-x-auto">
-                <input type="search" placeholder="Search" className="p-2 rounded-lg ml-5 md:ml-10 mt-5 md:mt-10 outline-2 outline-[#483AA0]" />
+                <input type="search" value={search} placeholder="Search" className="p-2 rounded-lg ml-5 md:ml-10 mt-5 md:mt-10 outline-2 outline-[#483AA0]" onChange={handleSearch} />
                 <table className="w-full mt-5 md:mt-10 bg-[#1f1f2e] rounded-lg m-5 md:m-10 text-left">
                     <thead>
                         <tr>
@@ -45,11 +59,11 @@ export default function Slug() {
                             <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td className="py-2 px-2 text-center">{index + 1}</td>
                                 <td className="py-4 px-6">{folder.name}</td>
-                                <td className="py-4 px-6">{folder.folder}</td>
-                                <td className="py-4 px-6 text-center">{folder.method}</td>
+                                <td className="py-4 px-6">{capitalize(folder.folder)}</td>
+                                <td className={`py-4 px-6 font-bold ${folder.method == "GET" ? "text-green-500" : "text-red-500"}`}>{folder.method}</td>
                                 <td className="py-4 px-6">{folder.desc}</td>
                                 <td className="py-4 px-6">{folder.query}</td>
-                                <td className="py-4 px-6">{folder.status}</td>
+                                <td className={`py-4 px-6 font-bold ${folder.status == "true" ? "text-green-500" : "text-red-500"}`}>{folder.status == "true" ? "Active" : "Inactive"}</td>
                                 <td className="py-4 px-6">
                                     <Link href={`/api/features/${folder.folder}/${folder.name + folder.example}${folder.example ? "&apikey=" : "?apikey="}${dataUser ? dataUser.apikey : "APIKEY"}`}>
                                         <button className="bg-[#483AA0] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 font-bold">
@@ -64,4 +78,8 @@ export default function Slug() {
             </div>
         </div>
     )
+}
+
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
