@@ -14,7 +14,7 @@ export default function Login() {
 
     useEffect(() => {
         if (status === "authenticated") {
-            router.push("/user/dashboard");
+            router.push("/dashboard");
         }
     }, [status, router]);
 
@@ -27,7 +27,7 @@ export default function Login() {
         });
 
         if (res.ok) {
-            router.push("/user/dashboard");
+            router.push("/dashboard");
         } else {
             alert("Login gagal");
         }
