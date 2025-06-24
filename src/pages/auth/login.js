@@ -1,0 +1,87 @@
+'use client';
+import Navbar from "@/components/navbar";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/react";
+
+export default function Login() {
+    const [form, setForm] = useState({ email: '', password: '' });
+    const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
+
+    const { status } = useSession();
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            router.push("/user/dashboard");
+        }
+    }, [status, router]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const res = await signIn("credentials", {
+            redirect: false,
+            email: form.email,
+            password: form.password,
+        });
+
+        if (res.ok) {
+            router.push("/user/dashboard");
+        } else {
+            alert("Login gagal");
+        }
+    };
+
+    return (
+        <div className="min-h-screen">
+            <Navbar />
+            <div className="flex flex-col items-center justify-center h-screen">
+                <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg m-5 md:m-10">
+                    <div>
+                        <h1 className="text-xl md:text-2xl font-bold">Sign In</h1>
+                        <p className="text-gray-400">Enter your email and password, or sign up if you don&apos;t have an account</p>
+                    </div>
+                    <form onSubmit={handleSubmit} className="mt-4">
+                        <div className="mb-4">
+                            <label className="block text-sm mb-2" htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                className="w-full p-2 bg-[#2c2c3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#483AA0]"
+                                placeholder="Enter your email"
+                                value={form.email}
+                                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <div className="flex justify-between items-center mb-2">
+                                <label className="block text-sm mb-2" htmlFor="password">Password</label>
+                                <Link href="/reset-password" className="text-sm text-[#483AA0] hover:underline">Forgot Password?</Link>
+                            </div>
+                            <div className="relative">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    id="password"
+                                    name="password"
+                                    className="w-full p-2 bg-[#2c2c3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#483AA0]"
+                                    placeholder="Enter your password"
+                                    value={form.password}
+                                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                                    required
+                                />
+                                <button type="button" className="absolute mt-2 right-2" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</button>
+                            </div>
+                        </div>
+                        <button type="submit" className="w-full bg-[#483AA0] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 font-bold">
+                            Sign In
+                        </button>
+                        <p className="text-gray-400 mt-4">Don&apos;t have an account? <Link href="/auth/register" className="text-[#483AA0] hover:underline">Sign Up</Link></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+}

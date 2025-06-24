@@ -1,0 +1,26 @@
+{
+  "folders": [
+    "anime",
+    "downloader"
+  ],
+  "features": [
+    {
+      "name": "otakudesu",
+      "method": "GET",
+      "folder": "anime",
+      "desc": "Get Anime Info from Otakudesu",
+      "query": "query",
+      "example": "?query=one%20piece",
+      "status": "true"
+    },
+    {
+      "name": "tiktok",
+      "method": "GET",
+      "folder": "downloader",
+      "desc": "Download video from TikTok",
+      "query": "url",
+      "example": "?url=https://www.tiktok.com/@inilahcom/video/7518655361784548615?is_from_webapp=1&sender_device=pc",
+      "status": "true"
+    }
+  ]
+}

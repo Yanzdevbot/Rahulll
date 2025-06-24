@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+/* Tambahan custom kamu */
+:root {
+  --background: #333446;
+  --foreground: #ffffff;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
