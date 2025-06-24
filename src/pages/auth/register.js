@@ -14,7 +14,7 @@ export default function Register() {
 
     useEffect(() => {
         if (status === "authenticated") {
-            router.push("/user/dashboard");
+            router.push("/dashboard");
         }
     }, [status, router]);
 
