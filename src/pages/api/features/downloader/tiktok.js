@@ -8,10 +8,17 @@ const handler = async (req, res) => {
         await runMiddleware(req, res, checkApiKey);
         const { url } = req.query;
         const response = await tiktok(url);
-        return res.status(200).json(response);
+        return res.status(200).json({
+            status: true,
+            message: 'Success',
+            result: response.data
+        });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Internal Server Error' });
+        return res.status(500).json({
+            status: false,
+            message: 'Internal Server Error'
+        });
     }
 }
 
