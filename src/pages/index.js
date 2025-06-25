@@ -45,9 +45,9 @@ export default function Home() {
                             </p>
                             <div className="flex flex-col">
                                 <Link href="/dashboard" className="mt-4">
-                                    <button className="flex flex-row font-bold bg-[#483AA0] px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 mt-10">
+                                    <button className="flex flex-row font-bold bg-[#483AA0] px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 mt-10 items-center">
                                         Go to Dashboard 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mt-1 ml-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-5">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
                                         </svg>
 
@@ -55,18 +55,18 @@ export default function Home() {
                                 </Link>
                                 <div className="flex flex-row">
                                     <Link href="/auth/login" className="mr-10">
-                                        <button className="flex flex-row font-bold bg-[#483AA0] px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 mt-5">
+                                        <button className="items-center flex flex-row font-bold bg-[#483AA0] px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 mt-5">
                                             Login
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mt-1 ml-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-3">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
                                             </svg>
 
                                         </button>
                                     </Link>
                                     <Link href="/auth/register" className="">
-                                        <button className="flex flex-row font-bold bg-[#483AA0] px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 mt-5">
+                                        <button className="items-center flex flex-row font-bold bg-[#483AA0] px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 mt-5">
                                             Register
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mt-1 ml-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-3">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
                                             </svg>
 
