@@ -1,7 +1,8 @@
 {
   "folders": [
     "anime",
-    "downloader"
+    "downloader",
+    "maker"
   ],
   "features": [
     {
@@ -56,6 +57,15 @@
       "desc": "Download video from TikTok",
       "query": "url",
       "example": "?url=https://www.tiktok.com/@inilahcom/video/7518655361784548615?is_from_webapp=1&sender_device=pc",
+      "status": "true"
+    },
+    {
+      "name": "brat",
+      "method": "GET",
+      "folder": "maker",
+      "desc": "Make text to brat",
+      "query": "text",
+      "example": "?text=Hello%20World",
       "status": "true"
     }
   ]
