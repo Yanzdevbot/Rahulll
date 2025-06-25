@@ -7,11 +7,17 @@ const handler = async (req, res) => {
     try {
         await runMiddleware(req, res, checkApiKey);
         const { query } = req.query;
-        const response = await otakudesu.search(query);
+        if (!query) {
+            return res.status(400).json({
+                status: false,
+                message: 'Bad Request'
+            });
+        }
+        const result = await otakudesu.search(query);
         return res.status(200).json({
             status: true,
             message: 'Success',
-            result: response
+            result
         });
     } catch (error) {
         console.error(error);

@@ -8,15 +8,9 @@ const handler = async (req, res) => {
     if (req.method !== 'GET') return res.status(405).end();
     try {
         await runMiddleware(req, res, checkApiKey);
-        const { text } = req.query;
-        if (!text) {
-            return res.status(400).json({
-                status: false,
-                message: 'Bad Request'
-            });
-        }
-        const imageUrl = `https://brat.caliphdev.com/api/brat?text=${text}`
-        const filename = `brat_${Date.now()}.jpg`;
+        const response = await axios.get('https://api.waifu.pics/sfw/waifu');
+        const imageUrl = response.data.url;
+        const filename = `waifu_${Date.now()}.jpg`;
         const filePath = path.join(process.cwd(), 'tmp', filename);
         const result = await axios.get(imageUrl, { responseType: 'arraybuffer' });
         fs.writeFileSync(filePath, Buffer.from(result.data, 'binary'));
@@ -33,10 +27,10 @@ const handler = async (req, res) => {
 }
 
 handler.method = 'GET';
-handler.folder = 'maker';
-handler.desc = 'Make text to brat';
-handler.query = "text";
-handler.example = "?text=Hello%20World";
+handler.folder = 'anime';
+handler.desc = 'Get Waifu Image';
+handler.query = "";
+handler.example = "";
 handler.status = true;
 
 export default handler

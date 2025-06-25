@@ -1,4 +1,4 @@
-import Instagram from '../../../../../lib/scrapers/instagram';
+import ytSearch from "../../../../../lib/scrapers/ytsearch";
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
 
@@ -6,15 +6,14 @@ const handler = async (req, res) => {
     if (req.method !== 'GET') return res.status(405).end();
     try {
         await runMiddleware(req, res, checkApiKey);
-        const { url } = req.query;
-        if (!url) {
+        const { query } = req.query;
+        if (!query) {
             return res.status(400).json({
                 status: false,
                 message: 'Bad Request'
             });
         }
-        const ig = new Instagram()
-        const result = await ig.download(url);
+        const result = await ytSearch(query);
         return res.status(200).json({
             status: true,
             message: 'Success',
@@ -30,10 +29,10 @@ const handler = async (req, res) => {
 }
 
 handler.method = 'GET';
-handler.folder = 'downloader';
-handler.desc = 'Download video from Instagram';
-handler.query = "url";
-handler.example = "?url=https://www.instagram.com/reel/DLQC9GSBrf1/?utm_source=ig_web_copy_link";
+handler.folder = 'search';
+handler.desc = 'Search Video/Audio from Youtube';
+handler.query = "query";
+handler.example = "?query=mantra%20hujan";
 handler.status = true;
 
 export default handler

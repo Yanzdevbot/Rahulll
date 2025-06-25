@@ -27,7 +27,7 @@ export default function Profile() {
 
     const handleSave = async () => {
         try {
-            const response = await fetch("/api/user/update", {
+            const result = await fetch("/api/user/update", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

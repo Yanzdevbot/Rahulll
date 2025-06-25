@@ -2,7 +2,8 @@
   "folders": [
     "anime",
     "downloader",
-    "maker"
+    "maker",
+    "search"
   ],
   "features": [
     {
@@ -42,6 +43,15 @@
       "status": "true"
     },
     {
+      "name": "waifu",
+      "method": "GET",
+      "folder": "anime",
+      "desc": "Get Waifu Image",
+      "query": "",
+      "example": "",
+      "status": "true"
+    },
+    {
       "name": "instagram",
       "method": "GET",
       "folder": "downloader",
@@ -66,6 +76,33 @@
       "desc": "Make text to brat",
       "query": "text",
       "example": "?text=Hello%20World",
+      "status": "true"
+    },
+    {
+      "name": "fakechat",
+      "method": "GET",
+      "folder": "maker",
+      "desc": "Make text to fakechat",
+      "query": "text, name, avatar",
+      "example": "?text=Hello%20World&name=RyHar&avatar=https://pomf2.lain.la/f/v53tu30l.jpg",
+      "status": "true"
+    },
+    {
+      "name": "sticker-meme",
+      "method": "GET",
+      "folder": "maker",
+      "desc": "Make text to sticker meme",
+      "query": "atas, bawah, url",
+      "example": "?atas=Hello%20World&bawah=RyHar&url=https://pomf2.lain.la/f/v53tu30l.jpg",
+      "status": "true"
+    },
+    {
+      "name": "youtube-search",
+      "method": "GET",
+      "folder": "search",
+      "desc": "Search Video/Audio from Youtube",
+      "query": "query",
+      "example": "?query=mantra%20hujan",
       "status": "true"
     }
   ]
