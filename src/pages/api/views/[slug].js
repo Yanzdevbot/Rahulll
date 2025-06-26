@@ -3,6 +3,7 @@ import PageView from "../../../../models/pageView";
 
 export default async function handler(req, res) {
     const { slug } = req.query;
+
     await dbConnect();
 
     const ip = req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress;

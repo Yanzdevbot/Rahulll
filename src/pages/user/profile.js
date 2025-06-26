@@ -3,36 +3,21 @@ import Navbar from "@/components/navbar";
 import Alert from "@/components/alert";
 import { useState, useEffect } from "react";
 import { useUser } from "@/context/userContext";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Profile() { 
     const [form, setForm] = useState({ name: "", apikey: "" });
     const [editName, setEditName] = useState(false);
     const [editApikey, setEditApikey] = useState(false);
-    const [showAlert, setShowAlert] = useState({
-        message: "",
-        visible: false
-    });
+    const [showAlert, setShowAlert] = useState({ message: "", visible: false });
+    const router = useRouter();
+    const { status } = useSession();
     const user = useUser();
 
     const alert = (message, visible) => {
         setShowAlert({ message, visible });
     }
-
-    useEffect(() => {
-        if (!user) return;
-        setForm({
-            name: user.name || "",
-            apikey: user.apikey || ""
-        });
-    }, [user]);
-
-    if (!user) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <h1>Loading...</h1>
-            </div>
-        )
-    };
 
     const handleSave = async () => {
         try {
@@ -60,6 +45,28 @@ export default function Profile() {
         } catch (error) {
             alert("An error occurred: " + error, true);
         }
+    };
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/auth/login");
+        }
+    }, [status, router]);
+
+    useEffect(() => {
+        if (!user) return;
+        setForm({
+            name: user.name || "",
+            apikey: user.apikey || ""
+        });
+    }, [user]);
+
+    if (!user) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <h1>Loading...</h1>
+            </div>
+        )
     };
 
     return (
@@ -152,7 +159,6 @@ export default function Profile() {
         </div>
     )
 }
-
 const limit = {
     "basic": 100,
     "premium": 1000,

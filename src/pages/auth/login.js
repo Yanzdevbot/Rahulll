@@ -9,24 +9,13 @@ import { signIn, useSession } from "next-auth/react";
 export default function Login() {
     const [form, setForm] = useState({ email: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
-    const [showAlert, setShowAlert] = useState({
-        message: "",
-        visible: false
-    });
+    const [showAlert, setShowAlert] = useState({ message: "", visible: false });
+    const router = useRouter();
+    const { status } = useSession();
 
     const alert = (message, visible) => {
         setShowAlert({ message, visible });
     }
-
-    const router = useRouter();
-
-    const { status } = useSession();
-
-    useEffect(() => {
-        if (status === "authenticated") {
-            router.push("/dashboard");
-        }
-    }, [status, router]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -42,6 +31,12 @@ export default function Login() {
             alert("Login gagal", true);
         }
     };
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            router.push("/dashboard");
+        }
+    }, [status, router]);
 
     return (
         <div className="min-h-screen">

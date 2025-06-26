@@ -7,6 +7,7 @@ export default async function handler(req, res) {
     if (req.method !== "PUT") return res.status(405).json({ message: "Method not allowed" });
 
     await dbConnect();
+
     const session = await getServerSession(req, res, authOptions);
 
     if (!session) return res.status(401).json({ message: "Unauthorized" });

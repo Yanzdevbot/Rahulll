@@ -8,6 +8,12 @@ export default function Dashboard() {
     const [totalRequests, setTotalRequests] = useState(null);
     const [time, setTime] = useState(null);
 
+    const formatTime = time?.toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+    }).replace(/\./g, ":"); 
+
     useEffect(() => {
         setTime(new Date());
         const interval = setInterval(() => {
@@ -16,12 +22,6 @@ export default function Dashboard() {
 
         return () => clearInterval(interval);
     }, []);
-
-    const formatTime = time?.toLocaleTimeString("id-ID", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-    }).replace(/\./g, ":"); 
 
     useEffect(() => {
         const fetchViews = async () => {

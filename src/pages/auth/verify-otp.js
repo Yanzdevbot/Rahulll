@@ -7,28 +7,12 @@ export default function VerifyOTP() {
     const [otp, setOtp] = useState('');
     const [form, setForm] = useState(null);
     const [resendCooldown, setResendCooldown] = useState(0);
-    const [showAlert, setShowAlert] = useState({
-        message: "",
-        visible: false
-    });
+    const [showAlert, setShowAlert] = useState({ message: "", visible: false });
+    const router = useRouter();
 
     const alert = (message, visible) => {
         setShowAlert({ message, visible });
     }
-
-    const router = useRouter();
-
-    useEffect(() => {
-        const data = sessionStorage.getItem('registerForm');
-        if (!data) router.push('/auth/register');
-        else setForm(JSON.parse(data));
-    }, [router]);
-
-    useEffect(() => {
-        if (resendCooldown === 0) return;
-        const i = setInterval(() => setResendCooldown((c) => c - 1), 1000);
-        return () => clearInterval(i);
-    }, [resendCooldown]);
 
     const handleVerify = async (e) => {
         e.preventDefault();
@@ -62,6 +46,18 @@ export default function VerifyOTP() {
             alert('Gagal kirim ulang OTP', true);
         }
     };
+
+    useEffect(() => {
+        const data = sessionStorage.getItem('registerForm');
+        if (!data) router.push('/auth/register');
+        else setForm(JSON.parse(data));
+    }, [router]);
+
+    useEffect(() => {
+        if (resendCooldown === 0) return;
+        const i = setInterval(() => setResendCooldown((c) => c - 1), 1000);
+        return () => clearInterval(i);
+    }, [resendCooldown]);
 
     return (
         <div className="min-h-screen">

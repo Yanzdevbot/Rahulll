@@ -39,7 +39,7 @@ export default function Navbar() {
                     link: "/user/profile"
                 });
             }
-            if (user && user.status === "admin") {
+            if (user && user?.status === "admin") {
                 if (!mainPage.find((item) => item.title === 'Dashboard Admin')) {
                     mainPage.push({
                         title: "Dashboard Admin",
@@ -48,24 +48,16 @@ export default function Navbar() {
                     });
                 }
             }
-            if (user && !mainPage.find((item) => item.title === 'Logout')) {
-                mainPage.push({
-                    title: "Logout",
-                    icon: "M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75",
-                    link: "#",
-                    onClick: handleLogout
-                });
-            }
         }
     }, [session, user]);
 
 
     const handleLogout = async () => {
-        await signOut({ callbackUrl: '/dashboard' })
+        await signOut({ callbackUrl: '/auth/login' });
     }
 
     return (
-        <div>
+        <navbar>
             <div ref={navRef} className="h-16 bg-[#1f1f2e] w-full flex items-center justify-between px-5 shadow-lg">
                 <button className={`bg-transparent border-none cursor-pointer ml-5 my-auto hover:text-[#483AA0] transition duration-300 ${isOpenNav ? 'text-[#483AA0]' : ''}`} onClick={() => setIsOpenNav(!isOpenNav)}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -101,36 +93,42 @@ export default function Navbar() {
                     <ul>
                         {mainPage.map((item, index) => (
                             <li key={index} className="mb-4">
-                                <Link href={item.link} onClick={item?.onClick}>
-                                    <div className={`flex items-center gap-2 hover:text-[#483AA0] cursor-pointer transition duration-300 text-sm lg:text-md ${isActive(item.link) ? 'text-[#483AA0]' : ''}`}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
-                                            <path d={item.icon} />
-                                        </svg>
-                                        <span className="text-md">{item.title}</span>
-                                    </div>
+                                <Link href={item.link} className={`flex items-center gap-2 hover:text-[#483AA0] cursor-pointer transition duration-300 text-sm lg:text-md ${isActive(item.link) ? 'text-[#483AA0]' : ''}`}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                                        <path d={item.icon} />
+                                    </svg>
+                                    <span className="text-md">{item.title}</span>
                                 </Link>
                             </li>
                         ))}
+                        {session && (
+                            <li className="mb-4">
+                                <button type="button" onClick={handleLogout} className="flex items-center gap-2 hover:text-[#483AA0] cursor-pointer transition duration-300 text-sm lg:text-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                                        <path d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                                    </svg>
+                                    <span className="text-md">Logout</span>
+                                </button>
+                            </li>
+                        )}
                     </ul>
                 </div>
                 <div className="mt-10 border-b border-[#483AA0] pb-5">
                     <ul>
                         {secondaryPage.map((item, index) => (
                             <li key={index} className="mb-4">
-                                <Link href={item.link}>
-                                    <div className={`flex items-center gap-2 hover:text-[#483AA0] cursor-pointer transition duration-300 text-sm md:text-md ${isActive(item.link) ? 'text-[#483AA0]' : ''}`}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
-                                            <path d={item.icon} />
-                                        </svg>
-                                        <span className="text-md">{item.title}</span>
-                                    </div>
+                                <Link href={item.link} className={`flex items-center gap-2 hover:text-[#483AA0] cursor-pointer transition duration-300 text-sm md:text-md ${isActive(item.link) ? 'text-[#483AA0]' : ''}`}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                                        <path d={item.icon} />
+                                    </svg>
+                                    <span className="text-md">{item.title}</span>
                                 </Link>
                             </li>
                         ))}
                     </ul>
                 </div>
             </div>
-        </div>
+        </navbar>
     )
 }
 
