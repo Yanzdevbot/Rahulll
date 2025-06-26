@@ -1,6 +1,4 @@
 import axios from "axios";
-import fs from "fs";
-import path from "path";
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
 
@@ -16,13 +14,9 @@ const handler = async (req, res) => {
             });
         }
         const imageUrl = `https://brat.caliphdev.com/api/brat?text=${text}`
-        const filename = `brat_${Date.now()}.jpg`;
-        const filePath = path.join(process.cwd(), 'tmp', filename);
         const result = await axios.get(imageUrl, { responseType: 'arraybuffer' });
-        fs.writeFileSync(filePath, Buffer.from(result.data, 'binary'));
-        const imageBuffer = fs.readFileSync(filePath);
         res.setHeader('Content-Type', 'image/jpeg');
-        res.send(imageBuffer);
+        res.send(result.data);
     } catch (error) {
         console.error(error);
         return res.status(500).json({

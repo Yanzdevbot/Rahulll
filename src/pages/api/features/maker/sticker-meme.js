@@ -1,6 +1,4 @@
 import axios from "axios";
-import fs from "fs";
-import path from "path";
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
 
@@ -15,13 +13,9 @@ const handler = async (req, res) => {
                 message: 'Bad Request'
             });
         }
-        const filename = `sticker-meme_${Date.now()}.jpg`;
-        const filePath = path.join(process.cwd(), 'tmp', filename);
         const result = await axios.get(`https://api.memegen.link/images/custom/${encodeURIComponent(atas ? atas: ' ')}/${encodeURIComponent(bawah ? bawah: ' ')}.png?background=${url}`, { responseType: 'arraybuffer' });
-        fs.writeFileSync(filePath, Buffer.from(result.data, 'binary'));
-        const imageBuffer = fs.readFileSync(filePath);
         res.setHeader('Content-Type', 'image/jpeg');
-        res.send(imageBuffer);
+        res.send(result.data);
     } catch (error) {
         console.error(error);
         return res.status(500).json({

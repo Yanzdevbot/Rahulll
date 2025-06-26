@@ -1,5 +1,6 @@
 {
   "folders": [
+    "ai",
     "anime",
     "downloader",
     "internet",
@@ -7,6 +8,15 @@
     "search"
   ],
   "features": [
+    {
+      "name": "upscale",
+      "method": "GET",
+      "folder": "ai",
+      "desc": "Upscale Image using AI",
+      "query": "url",
+      "example": "?url=https://pomf2.lain.la/f/v53tu30l.jpg",
+      "status": "true"
+    },
     {
       "name": "otakudesu-detail",
       "method": "GET",
