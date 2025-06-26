@@ -7,7 +7,7 @@ export default function Alert({ message, visible, onClose }) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div className="bg-white dark:bg-gray-800 text-black dark:text-white p-4 rounded-xl shadow-xl w-full max-w-sm flex flex-col items-center">
+            <div className="bg-white dark:bg-gray-800 text-black dark:text-white p-4 rounded-xl shadow-xl w-full max-w-sm flex flex-col items-center m-10">
                 <p className="mb-4">{message}</p>
                 <button
                     onClick={onClose}
