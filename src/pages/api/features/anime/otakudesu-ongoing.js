@@ -26,6 +26,6 @@ handler.folder = 'anime';
 handler.desc = 'Get Ongoing Anime Info from Otakudesu';
 handler.query = "";
 handler.example = "";
-handler.status = true;
+handler.status = false;
 
 export default handler

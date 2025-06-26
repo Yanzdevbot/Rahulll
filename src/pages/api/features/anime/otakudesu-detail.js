@@ -33,6 +33,6 @@ handler.folder = 'anime';
 handler.desc = 'Get Detail Anime Info from Otakudesu';
 handler.query = "url";
 handler.example = "?url=https://otakudesu.cloud/anime/compass-20-sub-indo";
-handler.status = true;
+handler.status = false;
 
 export default handler

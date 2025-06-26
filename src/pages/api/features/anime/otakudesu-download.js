@@ -33,6 +33,6 @@ handler.folder = 'anime';
 handler.desc = 'Download Anime Info from Otakudesu';
 handler.query = "url";
 handler.example = "?url=https://otakudesu.cloud/episode/c20-sks-episode-12-sub-indo";
-handler.status = true;
+handler.status = false;
 
 export default handler

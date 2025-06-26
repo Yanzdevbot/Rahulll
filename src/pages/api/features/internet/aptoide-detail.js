@@ -1,4 +1,4 @@
-import otakudesu from "../../../../../lib/scrapers/otakudesu"
+import aptoide from '../../../../../lib/scrapers/aptoide';
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
 
@@ -6,14 +6,14 @@ const handler = async (req, res) => {
     if (req.method !== 'GET') return res.status(405).end();
     try {
         await runMiddleware(req, res, checkApiKey);
-        const { query } = req.query;
-        if (!query) {
+        const { id } = req.query;
+        if (!id) {
             return res.status(400).json({
                 status: false,
                 message: 'Bad Request'
             });
         }
-        const result = await otakudesu.search(query);
+        const result = await aptoide.download(id);
         return res.status(200).json({
             status: true,
             message: 'Success',
@@ -29,10 +29,10 @@ const handler = async (req, res) => {
 }
 
 handler.method = 'GET';
-handler.folder = 'anime';
-handler.desc = 'Search Anime Info from Otakudesu';
-handler.query = "query";
-handler.example = "?query=one%20piece";
-handler.status = false;
+handler.folder = 'internet';
+handler.desc = 'Get Detail Apk from Aptoide';
+handler.query = "id";
+handler.example = "?id=com.groundhog.mcpemaster";
+handler.status = true;
 
 export default handler

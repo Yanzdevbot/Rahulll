@@ -2,6 +2,7 @@
   "folders": [
     "anime",
     "downloader",
+    "internet",
     "maker",
     "search"
   ],
@@ -13,7 +14,7 @@
       "desc": "Get Detail Anime Info from Otakudesu",
       "query": "url",
       "example": "?url=https://otakudesu.cloud/anime/compass-20-sub-indo",
-      "status": "true"
+      "status": "false"
     },
     {
       "name": "otakudesu-download",
@@ -22,7 +23,7 @@
       "desc": "Download Anime Info from Otakudesu",
       "query": "url",
       "example": "?url=https://otakudesu.cloud/episode/c20-sks-episode-12-sub-indo",
-      "status": "true"
+      "status": "false"
     },
     {
       "name": "otakudesu-ongoing",
@@ -31,7 +32,7 @@
       "desc": "Get Ongoing Anime Info from Otakudesu",
       "query": "",
       "example": "",
-      "status": "true"
+      "status": "false"
     },
     {
       "name": "otakudesu-search",
@@ -40,7 +41,7 @@
       "desc": "Search Anime Info from Otakudesu",
       "query": "query",
       "example": "?query=one%20piece",
-      "status": "true"
+      "status": "false"
     },
     {
       "name": "waifu",
@@ -67,6 +68,33 @@
       "desc": "Download video from TikTok",
       "query": "url",
       "example": "?url=https://www.tiktok.com/@inilahcom/video/7518655361784548615?is_from_webapp=1&sender_device=pc",
+      "status": "true"
+    },
+    {
+      "name": "aptoide-detail",
+      "method": "GET",
+      "folder": "internet",
+      "desc": "Get Detail Apk from Aptoide",
+      "query": "id",
+      "example": "?id=com.groundhog.mcpemaster",
+      "status": "true"
+    },
+    {
+      "name": "aptoide-search",
+      "method": "GET",
+      "folder": "internet",
+      "desc": "Search Apk from Aptoide",
+      "query": "query",
+      "example": "?query=minecraft",
+      "status": "true"
+    },
+    {
+      "name": "infogempa",
+      "method": "GET",
+      "folder": "internet",
+      "desc": "Get Info Gempa",
+      "query": "",
+      "example": "",
       "status": "true"
     },
     {
