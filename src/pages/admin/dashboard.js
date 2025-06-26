@@ -17,13 +17,13 @@ export default function Dashboard() {
         vip: 0
     });
 
-    useEffect(() => {
+    useEffect(() => {S
         fetch("/api/features")
             .then((res) => res.json())
             .then((data) => {
                 setTotalFeature(data.features.length);
             });
-    })
+    }, []);
 
     useEffect(() => {
         fetch("/api/user/data?type=all")
@@ -38,7 +38,7 @@ export default function Dashboard() {
                     vip: data.users.filter((user) => user.status === "vip").length
                 });
             });
-    })
+    }, []);S
 
     useEffect(() => {
         if (!user) return;
