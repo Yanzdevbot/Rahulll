@@ -10,7 +10,7 @@ export default function Slug() {
     const [originalFolders, setOriginalFolders] = useState([]);
     const [folders, setFolders] = useState([]);
     const { slug } = router.query;
-    const dataUser = useUser();
+    const user = useUser();
 
     const handleSearch = (e) => {
         const value = e.target.value;
@@ -65,7 +65,7 @@ export default function Slug() {
                                 <td className="py-4 px-6">{folder.query}</td>
                                 <td className={`py-4 px-6 font-bold ${folder.status == "true" ? "text-green-500" : "text-red-500"}`}>{folder.status == "true" ? "Active" : "Inactive"}</td>
                                 <td className="py-4 px-6">
-                                    <Link href={`/api/features/${folder.folder}/${folder.name + folder.example}${folder.example ? "&apikey=" : "?apikey="}${dataUser ? dataUser.apikey : "APIKEY"}`}>
+                                    <Link href={`/api/features/${folder.folder}/${folder.name + folder.example}${folder.example ? "&apikey=" : "?apikey="}${user ? user.apikey : "APIKEY"}`}>
                                         <button className="bg-[#483AA0] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 font-bold">
                                             View
                                         </button>

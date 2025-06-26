@@ -12,21 +12,21 @@ export default function Profile() {
         message: "",
         visible: false
     });
-    const dataUser = useUser();
+    const user = useUser();
 
     const alert = (message, visible) => {
         setShowAlert({ message, visible });
     }
 
     useEffect(() => {
-        if (!dataUser) return;
+        if (!user) return;
         setForm({
-            name: dataUser.name || "",
-            apikey: dataUser.apikey || ""
+            name: user.name || "",
+            apikey: user.apikey || ""
         });
-    }, [dataUser]);
+    }, [user]);
 
-    if (!dataUser) {
+    if (!user) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <h1>Loading...</h1>
@@ -40,7 +40,7 @@ export default function Profile() {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    email: dataUser.email,
+                    email: user.email,
                     name: form.name,
                     apikey: form.apikey,
                 }),
@@ -52,8 +52,8 @@ export default function Profile() {
                 setEditName(false);
                 setEditApikey(false);
                 alert("Profile updated!", true);
-                dataUser.name = form.name;
-                dataUser.apikey = form.apikey;
+                user.name = form.name;
+                user.apikey = form.apikey;
             } else {
                 alert(`Update failed: ${data.message}`, true);
             }
@@ -71,17 +71,17 @@ export default function Profile() {
                     <div className="mb-5 md:mb-10 grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
                             <p className="text-gray-400 font-bold">Name:</p>
-                            <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{dataUser.name}</p>
+                            <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{user.name}</p>
                         </div>
                         <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
                             <p className="text-gray-400 font-bold">Email:</p>
-                            <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{dataUser.email}</p>
+                            <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{user.email}</p>
                         </div>
                         <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
                             <p className="text-gray-400 font-bold">Apikey:</p>
                             <div className="flex items-center">
-                                <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{dataUser.apikey}</p>
-                                <button onClick={() => navigator.clipboard.writeText(dataUser.apikey).then(() => alert("Copied to clipboard!", true))} className="text-md md:text-lg lg:text-xl font-bold hover:text-[#483AA0] pl-2">
+                                <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{user.apikey}</p>
+                                <button onClick={() => navigator.clipboard.writeText(user.apikey).then(() => alert("Copied to clipboard!", true))} className="text-md md:text-lg lg:text-xl font-bold hover:text-[#483AA0] pl-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
                                     </svg>
@@ -90,7 +90,7 @@ export default function Profile() {
                         </div>
                         <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
                             <p className="text-gray-400 font-bold">Limit API:</p>
-                            <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{`${dataUser.request_today} / ${limit[dataUser.status]}`}</p>
+                            <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{`${user.request_today} / ${limit[user.status]}`}</p>
                         </div>
                     </div>
                 </div>
@@ -156,5 +156,6 @@ export default function Profile() {
 const limit = {
     "basic": 100,
     "premium": 1000,
-    "vip": 10000
+    "vip": 10000,
+    "admin": 100000
 }
