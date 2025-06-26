@@ -17,7 +17,7 @@ export default function Dashboard() {
         vip: 0
     });
 
-    useEffect(() => {S
+    useEffect(() => {
         fetch("/api/features")
             .then((res) => res.json())
             .then((data) => {
