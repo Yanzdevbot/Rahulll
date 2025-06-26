@@ -3,8 +3,45 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/navbar";
 import Alert from "@/components/alert";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
+import dbConnect from "../../../lib/mongodb";
+import User from "../../../models/user";
 
-export default function Dashboard() {
+export async function getServerSideProps(context) {
+    const session = await getServerSession(context.req, context.res, authOptions);
+    const user = await User.findOne({ email: session.user.email }, "-password");
+    if (!user || user.status !== "admin") {
+        return {
+            redirect: {
+                destination: "/auth/login",
+                permanent: false,
+            },
+        };
+    }
+
+    await dbConnect();
+
+    const users = await User.find({}).lean();
+
+    const data = {
+        totalUser: users.length,
+        basic: users.filter(u => u.status === "basic").length,
+        premium: users.filter(u => u.status === "premium").length,
+        vip: users.filter(u => u.status === "vip").length,
+        profit_premium: countProfitPremium(users),
+        profit_vip: countProfitVip(users)
+    };
+
+    return {
+        props: {
+            dataUser: data,
+        },
+    };
+}
+
+
+export default function Dashboard({ dataUser }) {
     const user = useUser();
     const router = useRouter();
     const [totalFeature, setTotalFeature] = useState(0);
@@ -26,19 +63,15 @@ export default function Dashboard() {
     }, []);
 
     useEffect(() => {
-        fetch("/api/user/data?type=all")
-            .then((res) => res.json())
-            .then((data) => {
-                setData({
-                    totalUser: data.users.length,
-                    profit_premium: countProfitPremium(data.users),
-                    profit_vip: countProfitVip(data.users),
-                    basic: data.users.filter((user) => user.status === "basic").length,
-                    premium: data.users.filter((user) => user.status === "premium").length,
-                    vip: data.users.filter((user) => user.status === "vip").length
-                });
-            });
-    }, []);
+        setData({
+            totalUser: dataUser.totalUser,
+            profit_premium: dataUser.profit_premium,
+            profit_vip: dataUser.profit_vip,
+            basic: dataUser.basic,
+            premium: dataUser.premium,
+            vip: dataUser.vip
+        })
+    }, [dataUser]);
 
     useEffect(() => {
         if (!user) return;
