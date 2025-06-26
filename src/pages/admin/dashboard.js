@@ -38,7 +38,7 @@ export default function Dashboard() {
                     vip: data.users.filter((user) => user.status === "vip").length
                 });
             });
-    }, []);S
+    }, []);
 
     useEffect(() => {
         if (!user) return;
