@@ -1,7 +1,7 @@
 import pxpic from "../../../../../lib/scrapers/pxpic";
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
-import axios from "axios";
+import { getImage } from "../../../../../lib/func";
 
 const handler = async (req, res) => {
     if (req.method !== 'GET') return res.status(405).end();
@@ -14,17 +14,15 @@ const handler = async (req, res) => {
                 message: 'Bad Request'
             });
         }
-        const imageBuffer = await axios.get(url, { responseType: 'arraybuffer' });
-        const result = await pxpic.create(imageBuffer.data, "enhance");
+        const result = await pxpic.create(await getImage(url), "enhance");
         if (!result || !result.resultImageUrl) {
             return res.status(500).json({
                 status: false,
                 message: 'Failed to process image'
             });
         }
-        const resultImageBuffer = await axios.get(result.resultImageUrl, { responseType: 'arraybuffer' });
         res.setHeader('Content-Type', 'image/jpeg');
-        res.send(resultImageBuffer.data);
+        res.send(await getImage(result.resultImageUrl));
     } catch (error) {
         console.error(error);
         return res.status(500).json({

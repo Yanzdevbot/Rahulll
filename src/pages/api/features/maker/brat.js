@@ -1,6 +1,6 @@
-import axios from "axios";
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
+import { getImage } from "../../../../../lib/func";
 
 const handler = async (req, res) => {
     if (req.method !== 'GET') return res.status(405).end();
@@ -14,9 +14,8 @@ const handler = async (req, res) => {
             });
         }
         const imageUrl = `https://brat.caliphdev.com/api/brat?text=${text}`
-        const result = await axios.get(imageUrl, { responseType: 'arraybuffer' });
         res.setHeader('Content-Type', 'image/jpeg');
-        res.send(result.data);
+        res.send(await getImage(imageUrl));
     } catch (error) {
         console.error(error);
         return res.status(500).json({

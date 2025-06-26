@@ -1,6 +1,6 @@
-import axios from "axios";
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
+import { getImage } from "../../../../../lib/func";
 
 const handler = async (req, res) => {
     if (req.method !== 'GET') return res.status(405).end();
@@ -13,9 +13,9 @@ const handler = async (req, res) => {
                 message: 'Bad Request'
             });
         }
-        const result = await axios.get(`https://api.memegen.link/images/custom/${encodeURIComponent(atas ? atas: ' ')}/${encodeURIComponent(bawah ? bawah: ' ')}.png?background=${url}`, { responseType: 'arraybuffer' });
+        const imageUrl = `https://api.memegen.link/images/custom/${encodeURIComponent(atas ? atas: ' ')}/${encodeURIComponent(bawah ? bawah: ' ')}.png?background=${url}`
         res.setHeader('Content-Type', 'image/jpeg');
-        res.send(result.data);
+        res.send(await getImage(imageUrl));
     } catch (error) {
         console.error(error);
         return res.status(500).json({
