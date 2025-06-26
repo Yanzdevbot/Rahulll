@@ -1,11 +1,21 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Alert from '@/components/alert';
 
 export default function VerifyOTP() {
     const [otp, setOtp] = useState('');
     const [form, setForm] = useState(null);
     const [resendCooldown, setResendCooldown] = useState(0);
+    const [showAlert, setShowAlert] = useState({
+        message: "",
+        visible: false
+    });
+
+    const alert = (message, visible) => {
+        setShowAlert({ message, visible });
+    }
+
     const router = useRouter();
 
     useEffect(() => {
@@ -30,10 +40,10 @@ export default function VerifyOTP() {
 
         if (res.ok) {
             sessionStorage.removeItem('registerForm');
-            alert('Berhasil daftar!');
+            alert('Berhasil daftar!', true);
             router.push('/auth/login');
         } else {
-            alert('OTP salah atau expired');
+            alert('OTP salah atau expired', true);
         }
     };
 
@@ -46,10 +56,10 @@ export default function VerifyOTP() {
         });
 
         if (res.ok) {
-            alert('OTP dikirim ulang');
+            alert('OTP dikirim ulang', true);
             setResendCooldown(30);
         } else {
-            alert('Gagal kirim ulang OTP');
+            alert('Gagal kirim ulang OTP', true);
         }
     };
 
@@ -83,6 +93,7 @@ export default function VerifyOTP() {
                     </div>
                 </div>
             </div>
+            <Alert message={showAlert.message} visible={showAlert.visible} onClose={() => setShowAlert({ message: "", visible: false })} />
         </div>
     )
 }

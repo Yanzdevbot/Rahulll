@@ -1,5 +1,6 @@
 'use client';
 import Navbar from "@/components/navbar";
+import Alert from "@/components/alert";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -8,6 +9,15 @@ import { signIn, useSession } from "next-auth/react";
 export default function Login() {
     const [form, setForm] = useState({ email: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
+    const [showAlert, setShowAlert] = useState({
+        message: "",
+        visible: false
+    });
+
+    const alert = (message, visible) => {
+        setShowAlert({ message, visible });
+    }
+
     const router = useRouter();
 
     const { status } = useSession();
@@ -29,7 +39,7 @@ export default function Login() {
         if (res.ok) {
             router.push("/dashboard");
         } else {
-            alert("Login gagal");
+            alert("Login gagal", true);
         }
     };
 
@@ -82,6 +92,7 @@ export default function Login() {
                     </form>
                 </div>
             </div>
+            <Alert message={showAlert.message} visible={showAlert.visible} onClose={() => setShowAlert({ message: "", visible: false })} />
         </div>
     );
 }
