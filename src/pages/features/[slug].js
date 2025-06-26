@@ -39,8 +39,8 @@ export default function Slug() {
     return (
         <div className="min-h-screen">
             <Navbar />
-            <div className="overflow-x-auto">
-                <input type="search" value={search} placeholder="Search" className="p-2 rounded-lg ml-5 md:ml-10 mt-5 md:mt-10 outline-2 outline-[#483AA0]" onChange={handleSearch} />
+            <div className="overflow-x-auto text-sm md:text-md lg:text-lg">
+                <input type="search" value={search} placeholder="Search..." className="p-2 rounded-lg ml-5 md:ml-10 mt-5 md:mt-10 ring-1 hover:ring-[#483AA0] focus:ring-[#483AA0]" onChange={handleSearch} />
                 <table className="w-full mt-5 md:mt-10 bg-[#1f1f2e] rounded-lg m-5 md:m-10 text-left">
                     <thead>
                         <tr>

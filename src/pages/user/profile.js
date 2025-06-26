@@ -99,6 +99,16 @@ export default function Profile() {
                             <p className="text-gray-400 font-bold">Limit API:</p>
                             <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{`${user.request_today} / ${limit[user.status]}`}</p>
                         </div>
+                        <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
+                            <p className="text-gray-400 font-bold">Status User:</p>
+                            <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{user.status}</p>
+                        </div>
+                        {/premium|vip/i.test(user.status) && (
+                            <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
+                                <p className="text-gray-400 font-bold">Expired:</p>
+                                <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{getRemainingTime(user.endDate)}</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -164,4 +174,18 @@ const limit = {
     "premium": 1000,
     "vip": 10000,
     "admin": 100000
+}
+
+function getRemainingTime(endDate) {
+    const now = new Date();
+    const end = new Date(endDate);
+    const diffMs = end - now;
+
+    if (diffMs <= 0) return "Expired";
+
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const diffHours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+    const diffMinutes = Math.floor((diffMs / (1000 * 60)) % 60);
+
+    return `${diffDays} hari, ${diffHours} jam, ${diffMinutes} menit`;
 }

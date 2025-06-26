@@ -6,13 +6,13 @@ import { authOptions } from "../auth/[...nextauth]";
 export default async function handler(req, res) {
     if (req.method !== "PUT") return res.status(405).json({ message: "Method not allowed" });
 
+    const { name, apikey } = req.body;
+    if (!name || !apikey) return res.status(400).json({ message: "name and apikey required" });
+
     await dbConnect();
 
     const session = await getServerSession(req, res, authOptions);
-
     if (!session) return res.status(401).json({ message: "Unauthorized" });
-
-    const { name, apikey } = req.body;
 
     try {
         const updated = await User.findOneAndUpdate(

@@ -66,7 +66,7 @@ export default function Navbar() {
                 </button>
                 {session ? (
                     <div className="flex items-center gap-2">
-                        <h1 className="font-bold">Halo, <span className="text-[#483AA0]">{user?.name || "Loading..."}</span></h1>
+                        <h1 className="font-bold md:text-xl">Halo, <span className="text-[#483AA0]">{user?.name || "Loading..."}</span></h1>
                     </div>
                 ) : ( 
                     <div className="flex items-center gap-2">

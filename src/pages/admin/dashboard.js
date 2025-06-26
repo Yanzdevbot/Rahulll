@@ -8,51 +8,14 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import dbConnect from "../../../lib/mongodb";
 import User from "../../../models/user";
 
-export async function getServerSideProps(context) {
-    await dbConnect();
-
-    const session = await getServerSession(context.req, context.res, authOptions);
-    if (!session) {
-        return {
-            redirect: {
-                destination: "/auth/login",
-                permanent: false,
-            },
-        };
-    }
-
-    const user = await User.findOne({ email: session.user.email }, "-password");
-    if (!user || user.status !== "admin") {
-        return {
-            redirect: {
-                destination: "/auth/login",
-                permanent: false,
-            },
-        };
-    }
-
-    const users = await User.find({}).lean();
-    const data = {
-        totalUser: users.length,
-        basic: users.filter(u => u.status === "basic").length,
-        premium: users.filter(u => u.status === "premium").length,
-        vip: users.filter(u => u.status === "vip").length,
-        profit_premium: countProfitPremium(users),
-        profit_vip: countProfitVip(users)
-    };
-
-    return {
-        props: {
-            dataUser: data,
-        },
-    };
-}
-
-
-export default function Dashboard({ dataUser }) {
+export default function Dashboard({ users, dataUser }) {
     const user = useUser();
     const router = useRouter();
     const [totalFeature, setTotalFeature] = useState(0);
+    const [search, setSearch] = useState("");
+    const [email, setEmail] = useState([]);
+    const [showAlert, setShowAlert] = useState({ message: "", visible: false });
+    const [form, setForm] = useState({ email: "", status: "premium", month: 1 });
     const [data, setData] = useState({
         totalUser: 0,
         profit_premium: 0,
@@ -61,6 +24,36 @@ export default function Dashboard({ dataUser }) {
         premium: 0,
         vip: 0
     });
+
+    const alert = (message, visible) => {
+        setShowAlert({ message, visible });
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!form.email) return alert("Email tidak boleh kosong", true);
+        if (!form.status) return alert("Status tidak boleh kosong", true);
+        if (!form.month) return alert("Bulan tidak boleh kosong", true);
+
+        const res = await fetch('/api/user/set-subscribtion', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form),
+        });
+
+        if (res.ok) {
+            const data = await res.json();
+            if (data.error) return alert(data.error, true);
+            alert(data.message, true);
+        }
+    };
+
+    useEffect(() => {
+        const filteredUsers = users.filter((user) => user.name.toLowerCase().includes(search.toLowerCase()));
+        if (!search) 
+            return setEmail([]);
+        setEmail(filteredUsers.map((user) => user.email));
+    }, [search, users]);
 
     useEffect(() => {
         fetch("/api/features")
@@ -86,6 +79,7 @@ export default function Dashboard({ dataUser }) {
             router.push("/dashboard");
         }
     }, [user, router]);
+
     return (
         <div className="min-h-screen">
             <Navbar />
@@ -179,8 +173,105 @@ export default function Dashboard({ dataUser }) {
                     </div>  
                 </div>
             </div>
+            <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg mb-5 m-5 md:m-10 flex flex-col items-center">
+                <h1 className="text-xl md:text-2xl lg:text-3xl mb-5 md:mb-10 font-bold">Upgrade <span className="text-[#483AA0]">User</span></h1>
+                <form onSubmit={handleSubmit} className="flex flex-col text-sm md:text-md lg:text-lg">
+                    <div className="w-full md:w-1/2">
+                        <h1 className="mb-2">Search Username:</h1>
+                        <input type="search" className="ring-1 hover:ring-[#483AA0] rounded-lg p-2 w-full mb-5 md:mb-10" placeholder="Search Username" required onChange={(e) => setSearch(e.target.value)} />
+                    </div>
+                    <div>
+                        <p>Pilih Email</p>
+                        <select value={form.email} className="ring-1 hover:bg-[#483AA0] focus:bg-[#483AA0] hover:ring-[#483AA0] rounded-lg p-2 w-full mb-5 md:mb-10" onChange={(e) => setForm({...form, email: e.target.value})}>
+                            <option value="">Pilih Email</option>
+                            {email.map((user, index) => {
+                                return (
+                                    <option key={index} value={user}>{user}</option>
+                                )
+                            })}
+                    </select>
+                    </div>
+                    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-10 lg:gap-15 mb-5 md:mb-10">
+                        <div>
+                            <p>Pilih Status</p>
+                            <select value={form.status} className="ring-1 hover:bg-[#483AA0] focus:bg-[#483AA0] hover:ring-[#483AA0] rounded-lg p-2 w-full" onChange={(e) => setForm({...form, status: e.target.value})}>
+                                <option value="premium">Premium</option>
+                                <option value="vip">Vip</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>Pilih Durasi</p>
+                            <select value={form.month} className="ring-1 hover:bg-[#483AA0] focus:bg-[#483AA0] hover:ring-[#483AA0] rounded-lg p-2 w-full" onChange={(e) => setForm({...form, month: parseInt(e.target.value)})}>
+                                <option value="1">1 Bulan</option>
+                                <option value="2">2 Bulan</option>
+                                <option value="3">3 Bulan</option>
+                                <option value="4">4 Bulan</option>
+                                <option value="5">5 Bulan</option>
+                                <option value="6">6 Bulan</option>
+                                <option value="7">7 Bulan</option>
+                                <option value="8">8 Bulan</option>
+                                <option value="9">9 Bulan</option>
+                                <option value="10">10 Bulan</option>
+                                <option value="11">11 Bulan</option>
+                                <option value="12">12 Bulan</option>
+                                <option value="13">13 Bulan</option>
+                                <option value="14">14 Bulan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" className="bg-[#483AA0] hover:bg-[#483AA0]/80 rounded-lg p-2 w-full mb-5">Upgrade</button>
+                </form>
+            </div>
+            <Alert message={showAlert.message} visible={showAlert.visible} onClose={() => setShowAlert({ message: "", visible: false })} />
         </div>
     );
+}
+
+export async function getServerSideProps(context) {
+    await dbConnect();
+
+    const session = await getServerSession(context.req, context.res, authOptions);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/auth/login",
+                permanent: false,
+            },
+        };
+    }
+
+    const user = await User.findOne({ email: session.user.email }, "-password");
+    if (!user || user.status !== "admin") {
+        return {
+            redirect: {
+                destination: "/auth/login",
+                permanent: false,
+            },
+        };
+    }
+
+    const users = await User.find({}).lean();
+    const data = {
+        totalUser: users.length,
+        basic: users.filter(u => u.status === "basic").length,
+        premium: users.filter(u => u.status === "premium").length,
+        vip: users.filter(u => u.status === "vip").length,
+        profit_premium: countProfitPremium(users),
+        profit_vip: countProfitVip(users)
+    };
+
+    return {
+        props: {
+            users: users.map((user) => {
+                return {
+                    name: user.name,
+                    email: user.email,
+                    status: user.status,
+                }
+            }),
+            dataUser: data,
+        },
+    };
 }
 
 function formatNumber(number) {
@@ -196,3 +287,4 @@ function countProfitVip(data) {
     data = data.filter(item => item.status === "vip");
     return data.length * 20000;
 }
+
