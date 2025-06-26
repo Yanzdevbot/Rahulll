@@ -9,7 +9,18 @@ import dbConnect from "../../../lib/mongodb";
 import User from "../../../models/user";
 
 export async function getServerSideProps(context) {
+    await dbConnect();
+
     const session = await getServerSession(context.req, context.res, authOptions);
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/auth/login",
+                permanent: false,
+            },
+        };
+    }
+
     const user = await User.findOne({ email: session.user.email }, "-password");
     if (!user || user.status !== "admin") {
         return {
@@ -20,10 +31,7 @@ export async function getServerSideProps(context) {
         };
     }
 
-    await dbConnect();
-
     const users = await User.find({}).lean();
-
     const data = {
         totalUser: users.length,
         basic: users.filter(u => u.status === "basic").length,

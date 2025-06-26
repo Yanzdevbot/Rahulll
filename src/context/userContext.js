@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
@@ -9,12 +9,18 @@ export const UserProvider = ({ children }) => {
     const { data: session } = useSession();
 
     useEffect(() => {
-        if (!user && session) {
+        if (session) {
             fetch('/api/user/data')
                 .then((res) => res.json())
-                .then((data) => setUser(data.user));
+                .then((data) => setUser(data.user))
+                .catch((err) => {
+                    console.error('Failed to fetch user:', err);
+                    setUser(null);
+                });
+        } else {
+            setUser(null);
         }
-    }, [user, session]);
+    }, [session]);
 
     return (
         <UserContext.Provider value={user}>
