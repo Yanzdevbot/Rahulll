@@ -37,7 +37,7 @@ export default function Slug() {
     }, [slug]);
 
     return (
-        <div className="min-h-screen">
+        <div className="relative h-[100dvh]">
             <Navbar />
             <div className="overflow-x-auto text-sm md:text-md lg:text-lg">
                 <input type="search" value={search} placeholder="Search..." className="p-2 rounded-lg ml-5 md:ml-10 mt-5 md:mt-10 ring-1 hover:ring-[#483AA0] focus:ring-[#483AA0]" onChange={handleSearch} />
