@@ -219,7 +219,7 @@ export default function Dashboard({ users, dataUser }) {
                             </select>
                         </div>
                     </div>
-                    <button type="submit" className="bg-[#483AA0] hover:bg-[#483AA0]/40 active:bg-[#483AA0]/60 rounded-lg p-2 w-full mb-5">Upgrade</button>
+                    <button type="submit" className="bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 rounded-lg p-2 w-full mb-5 transition duration-300">Upgrade</button>
                 </form>
             </div>
             <Alert message={showAlert.message} visible={showAlert.visible} onClose={() => setShowAlert({ message: "", visible: false })} />
