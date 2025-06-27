@@ -80,7 +80,7 @@ export default function Login() {
                                 <button type="button" className="absolute mt-2 right-2" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</button>
                             </div>
                         </div>
-                        <button type="submit" className="w-full bg-[#483AA0] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 font-bold">
+                        <button type="submit" className="w-full bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 text-white px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold">
                             Sign In
                         </button>
                         <p className="text-gray-400 mt-4">Don&apos;t have an account? <Link href="/auth/register" className="text-[#483AA0] hover:underline">Sign Up</Link></p>
