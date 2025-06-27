@@ -60,7 +60,7 @@ export default function VerifyOTP() {
     }, [resendCooldown]);
 
     return (
-        <div className="relative h-[100dvh]">
+        <div>
             <div className="flex flex-col items-center justify-center h-screen">
                 <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg m-5 md:m-10">
                     <div className="mb-4">
