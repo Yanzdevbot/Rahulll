@@ -77,15 +77,15 @@ export default function Profile() {
                 <div className="mt-8">
                     <div className="mb-5 md:mb-10 grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
-                            <p className="text-gray-400 font-bold">Name:</p>
+                            <p className="text-gray-400 font-bold text-sm md:text-md">Name:</p>
                             <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{user.name}</p>
                         </div>
                         <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
-                            <p className="text-gray-400 font-bold">Email:</p>
+                            <p className="text-gray-400 font-bold text-sm md:text-md">Email:</p>
                             <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{user.email}</p>
                         </div>
                         <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
-                            <p className="text-gray-400 font-bold">Apikey:</p>
+                            <p className="text-gray-400 font-bold text-sm md:text-md">Apikey:</p>
                             <div className="flex items-center">
                                 <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{user.apikey}</p>
                                 <button onClick={() => navigator.clipboard.writeText(user.apikey).then(() => alert("Copied to clipboard!", true))} className="text-md md:text-lg lg:text-xl font-bold hover:text-[#483AA0] pl-2">
@@ -96,16 +96,16 @@ export default function Profile() {
                             </div>
                         </div>
                         <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
-                            <p className="text-gray-400 font-bold">Limit API:</p>
+                            <p className="text-gray-400 font-bold text-sm md:text-md">Limit API:</p>
                             <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{`${user.request_today} / ${limit[user.status]}`}</p>
                         </div>
                         <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
-                            <p className="text-gray-400 font-bold">Status User:</p>
+                            <p className="text-gray-400 font-bold text-sm md:text-md">Status User:</p>
                             <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{user.status}</p>
                         </div>
                         {/premium|vip/i.test(user.status) && (
                             <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
-                                <p className="text-gray-400 font-bold">Expired:</p>
+                                <p className="text-gray-400 font-bold text-sm md:text-md">Expired:</p>
                                 <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{getRemainingTime(user.endDate)}</p>
                             </div>
                         )}
