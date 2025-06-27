@@ -64,11 +64,9 @@ export default function Slug() {
                                 <td className="py-4 px-6">{folder.desc}</td>
                                 <td className="py-4 px-6">{folder.query}</td>
                                 <td className={`py-4 px-6 font-bold ${folder.status == "true" ? "text-green-500" : "text-red-500"}`}>{folder.status == "true" ? "Active" : "Inactive"}</td>
-                                <td className="py-4 px-6">
-                                    <Link href={`/api/features/${folder.folder}/${folder.name + folder.example}${folder.example ? "&apikey=" : "?apikey="}${user ? user.apikey : "APIKEY"}`}>
-                                        <button className="bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 text-white px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold">
-                                            View
-                                        </button>
+                                <td className="py-6 px-8">
+                                    <Link className="inline-block bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold" href={`/api/features/${folder.folder}/${folder.name + folder.example}${folder.example ? "&apikey=" : "?apikey="}${user ? user.apikey : "APIKEY"}`}>
+                                        View
                                     </Link>
                                 </td>
                             </tr>
