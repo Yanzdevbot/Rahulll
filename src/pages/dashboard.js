@@ -109,7 +109,7 @@ export default function Dashboard() {
     }, []);
 
     return (
-        <div className="relative h-[100dvh]">
+        <div>
             <Navbar />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-5 p-5 md:p-10 w-full overflow-y-auto"> 
                 <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg mb-5">
