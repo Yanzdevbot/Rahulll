@@ -20,3 +20,18 @@ html {
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
 }
+
+@layer utilities {
+  @keyframes wave {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-wave {
+    animation: wave 10s linear infinite;
+  }
+}
