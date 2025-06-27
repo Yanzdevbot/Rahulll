@@ -71,7 +71,7 @@ export default function Home() {
                 </div>
             </div>
             <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
-                <svg className="relative block animate-wave w-[200%] h-[60px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <svg className="relative block animate-wave w-[200%]" viewBox="0 0 1200 120" preserveAspectRatio="none">
                     <path d="M0,0V10C150,50,350,50,600,20C850,-10,1050,10,1200,20V0Z" fill="#483AA0" ></path>
                 </svg>
             </div>
