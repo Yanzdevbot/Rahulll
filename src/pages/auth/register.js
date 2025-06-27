@@ -41,7 +41,7 @@ export default function Register() {
     }, [status, router]);
 
     return (
-        <div className="relative h-[100dvh]">
+        <div>
             <Navbar />
             <div className="flex flex-col items-center justify-center h-screen">
                 <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg m-5 md:m-10">
