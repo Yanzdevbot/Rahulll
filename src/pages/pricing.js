@@ -7,14 +7,14 @@ export default function Pricing() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 m-5 md:m-10">
                 {price.map((item, index) => (
                     <div key={index} className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg flex flex-col items-center">
-                        <h2 className="text-lg md:text-xl mb-2">{item.title}</h2>
-                        <p className="text-gray-400">Rp. {formatNumber(item.price)}</p>
+                        <h2 className="text-lg md:text-xl lg:text-2xl mb-2">{item.title}</h2>
+                        <p className="text-gray-400 text-md md:text-lg lg:text-xl">Rp. {formatNumber(item.price)}</p>
                         <ul className="mt-4 flex flex-col items-center">
                             {item.features.map((feature, index) => (
-                                <li key={index} className="mb-2 text-gray-400 text-center">{feature}</li>
+                                <li key={index} className="mb-2 text-gray-400 text-center text-sm md:text-md lg:text-lg">{feature}</li>
                             ))}
                         </ul>
-                        <button className="mt-4 bg-[#483AA0] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 font-bold" onClick={() => window.open(item.link, "_blank")}>
+                        <button className="mt-4 bg-[#483AA0] hover:bg-[#483AA0]/40 active:bg-[#483AA0]/60 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold text-sm md:text-md lg:text-lg" onClick={() => window.open(item.link, "_blank")}>
                             Buy Now
                         </button>
                     </div>
