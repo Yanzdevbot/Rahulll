@@ -63,14 +63,14 @@ export default function Profile() {
 
     if (!user) {
         return (
-            <div className="relative h-[100dvh] flex items-center justify-center">
+            <div className="h-screen flex items-center justify-center">
                 <h1>Loading...</h1>
             </div>
         )
     };
 
     return (
-        <div className="relative h-[100dvh]">
+        <div>
             <Navbar />
             <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg m-5 md:m-10 flex flex-col items-center scrollbar-hidden">
                 <h1 className="text-xl md:text-2xl lg:text-3xl mb-2 font-bold">User <span className="text-[#483AA0]">Profile</span></h1>
