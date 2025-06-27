@@ -57,7 +57,7 @@ export default function Navbar() {
     }
 
     return (
-        <navbar>
+        <div>
             <div ref={navRef} className="h-16 bg-[#1f1f2e] w-full flex items-center justify-between px-5 shadow-lg">
                 <button className={`bg-transparent border-none cursor-pointer ml-5 my-auto hover:text-[#483AA0] transition duration-300 ${isOpenNav ? 'text-[#483AA0]' : ''}`} onClick={() => setIsOpenNav(!isOpenNav)}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -69,14 +69,14 @@ export default function Navbar() {
                         <h1 className="font-bold md:text-xl">Halo, <span className="text-[#483AA0]">{user?.name || "Loading..."}</span></h1>
                     </div>
                 ) : ( 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 md:gap-5">
                         <Link href="/auth/login">
-                            <button className={`bg-[#483AA0] px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 ${isActive('/auth/login') ? 'text-[#1f1f2e]' : ''}`}>
+                            <button className={`bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 ${isActive('/auth/login') ? 'scale-105' : ''}`}>
                                 Login
                             </button>
                         </Link>
                         <Link href="/auth/register">
-                            <button className={`bg-[#483AA0] px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 ${isActive('/auth/register') ? 'text-[#1f1f2e]' : ''}`}>
+                            <button className={`bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 ${isActive('/auth/register') ? 'scale-105' : ''}`}>
                                 Register
                             </button>
                         </Link>
@@ -128,7 +128,7 @@ export default function Navbar() {
                     </ul>
                 </div>
             </div>
-        </navbar>
+        </div>
     )
 }
 
