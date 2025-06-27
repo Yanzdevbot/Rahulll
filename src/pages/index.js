@@ -70,50 +70,52 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
-                <svg className="relative block animate-wave w-[200%]" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                    <path d="M0,0V10C150,50,350,50,600,20C850,-10,1050,10,1200,20V0Z" fill="#483AA0" ></path>
-                </svg>
-            </div>
-            <div className="bg-[#483AA0] min-h-screen">
-                <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center">
-                    <div className="flex flex-col items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10 md:size-15 lg:size-20 mt-10">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
-                        </svg>
-                        <h1 className="text-lg md:text-xl lg:text-2xl font-bold mt-2">What is an API ?</h1>
-                        <p className="text-center mt-2 text-gray-400 m-5">API (Application Programming Interface) is a set of rules and protocols that allows one application to communicate with another.</p>
-                    </div>
-                    <div className="flex flex-col items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10 md:size-15 lg:size-20 mt-10">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
-                        </svg>
-                        <h1 className="text-lg md:text-xl lg:text-2xl font-bold mt-2">How API Works ?</h1>
-                        <p className="text-center mt-2 text-gray-400 m-5">An API is a way for two programs to talk to each other. It lets one app ask another for data or services, and get a response back — like placing an order and receiving the result.</p>
-                    </div>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10 md:size-15 lg:size-20 mt-10">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6Z" />
+            <div className="relative">
+                <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
+                    <svg className="relative block animate-wave w-[200%]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path d="M0,120 C300,80,900,160,1200,120 C1500,80,2100,160,2400,120 L2400,0 L0,0 Z" fill="#483AA0" />
                     </svg>
-                    <h1 className="text-lg md:text-xl lg:text-2xl font-bold">Pricing</h1>
-                    <p className="text-center mt-2 text-gray-400 m-5">Need an API? We&apos;re here for you. Fast, reliable, and easy-to-use APIs to power your applications.</p>
-                    <div className="w-full overflow-x-auto snap-x snap-mandatory flex-col items-center block md:flex">
-                        <div className="flex space-x-4 p-4 w-max md:gap-10 lg:gap-15">
-                            {price.map((item, index) => {
-                                return (
-                                    <Link key={index} href={item.link} target="_blank" className="active:scale-95 transition-transform duration-300 ease-in-out hover:-translate-y-3 p-10 flex flex-col items-center justify-center backdrop-blur-sm bg-[#1f1f2e]/60 rounded-md snap-center">
-                                        <h2 className="text-lg md:text-xl lg:text-2xl mb-2">{item.title}</h2>
-                                        <p className="text-gray-400 text-md md:text-lg lg:text-xl">Rp. {formatNumber(item.price)}</p>
-                                        <ul className="mt-4 flex flex-col items-center">
-                                            {item.features.map((feature, index) => (
-                                            <li key={index} className="mb-2 text-gray-400 text-center text-sm md:text-md lg:text-lg">{feature}</li>
-                                            ))}
-                                        </ul>
-                                </Link>
-                                )
-                            })}
+                </div>
+                <div className="bg-[#483AA0] min-h-screen">
+                    <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center">
+                        <div className="flex flex-col items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10 md:size-15 lg:size-20 mt-10">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                            </svg>
+                            <h1 className="text-lg md:text-xl lg:text-2xl font-bold mt-2">What is an API ?</h1>
+                            <p className="text-center mt-2 text-gray-400 m-5">API (Application Programming Interface) is a set of rules and protocols that allows one application to communicate with another.</p>
+                        </div>
+                        <div className="flex flex-col items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10 md:size-15 lg:size-20 mt-10">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+                            </svg>
+                            <h1 className="text-lg md:text-xl lg:text-2xl font-bold mt-2">How API Works ?</h1>
+                            <p className="text-center mt-2 text-gray-400 m-5">An API is a way for two programs to talk to each other. It lets one app ask another for data or services, and get a response back — like placing an order and receiving the result.</p>
+                        </div>
+                    </div>
+                    <div className="flex flex-col items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10 md:size-15 lg:size-20 mt-10">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6Z" />
+                        </svg>
+                        <h1 className="text-lg md:text-xl lg:text-2xl font-bold">Pricing</h1>
+                        <p className="text-center mt-2 text-gray-400 m-5">Need an API? We&apos;re here for you. Fast, reliable, and easy-to-use APIs to power your applications.</p>
+                        <div className="w-full overflow-x-auto snap-x snap-mandatory flex-col items-center block md:flex">
+                            <div className="flex space-x-4 p-4 w-max md:gap-10 lg:gap-15">
+                                {price.map((item, index) => {
+                                    return (
+                                        <Link key={index} href={item.link} target="_blank" className="active:scale-95 transition-transform duration-300 ease-in-out hover:-translate-y-3 p-10 flex flex-col items-center justify-center backdrop-blur-sm bg-[#1f1f2e]/60 rounded-md snap-center">
+                                            <h2 className="text-lg md:text-xl lg:text-2xl mb-2">{item.title}</h2>
+                                            <p className="text-gray-400 text-md md:text-lg lg:text-xl">Rp. {formatNumber(item.price)}</p>
+                                            <ul className="mt-4 flex flex-col items-center">
+                                                {item.features.map((feature, index) => (
+                                                <li key={index} className="mb-2 text-gray-400 text-center text-sm md:text-md lg:text-lg">{feature}</li>
+                                                ))}
+                                            </ul>
+                                    </Link>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>
