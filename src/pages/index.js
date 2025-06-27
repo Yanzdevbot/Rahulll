@@ -27,9 +27,9 @@ export default function Home() {
                 <meta property="og:image" content="/favicon.ico" />
                 <meta property="og:type" content="website" />
             </Head>
-            <div className="min-h-screen flex items-center justify-center">
+            <div className="min-h-screen">
                 <div className="mx-10 md:mx-15 lg:mx-20 flex flex-col md:flex-row items-center justify-between md:gap-10 lg:gap-20">
-                    <div className="md:text-xl md:w-1/2">
+                    <div className="mt-20 md:text-xl md:w-1/2">
                         <h1 className="font-bold mb-10 md:mb-15 lg:mb-20 text-md md:text-xl lg:text-2xl bg-[#483AA0] p-2 rounded-lg shadow-md inline-block">
                             RyHar API
                         </h1>
