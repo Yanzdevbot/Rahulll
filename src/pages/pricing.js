@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Pricing() {
     return (
-        <div className="min-h-screen">
+        <div className="relative h-[100dvh]">
             <Navbar />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 m-5 md:m-10">
                 {price.map((item, index) => (
