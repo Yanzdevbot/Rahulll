@@ -78,7 +78,7 @@ export default function VerifyOTP() {
                                 required
                             />
                             <div className='flex flex-col'>
-                                <button type="submit" className="mt-4 bg-[#483AA0] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#372a7a] transition duration-300 font-bold">
+                                <button type="submit" className="mt-4 bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 text-white px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold">
                                     Verify
                                 </button>
                                 <button type='button' onClick={handleResend} className={`mt-2 bg-invisible ${resendCooldown > 0 ? 'text-gray-500' : ''} hover:underline `}>
