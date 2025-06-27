@@ -32,6 +32,6 @@ html {
   }
 
   .animate-wave {
-    animation: wave 10s linear infinite;
+    animation: wave 6s linear infinite;
   }
 }
