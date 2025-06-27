@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import Link from "next/link";
 
 export default function Pricing() {
     return (
@@ -14,9 +15,9 @@ export default function Pricing() {
                                 <li key={index} className="mb-2 text-gray-400 text-center text-sm md:text-md lg:text-lg">{feature}</li>
                             ))}
                         </ul>
-                        <button className="mt-4 bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold text-sm md:text-md lg:text-lg" onClick={() => window.open(item.link, "_blank")}>
-                            Buy Now
-                        </button>
+                        <Link href={item.link} target="_black" className="mt-4 bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold text-sm md:text-md lg:text-lg">
+                            Order
+                        </Link>
                     </div>
                 ))}
             </div>
@@ -29,7 +30,7 @@ const price = [
         title: "Free",
         price: 0,
         features: ["Up to 100 requests per day", "Access to basic features", "No premium features"],
-        link: "https://wa.me/6289508188642?text=halo+bang+mau+paket+free"
+        link: "/dashboard"
     },
     {
         title: "Premium",
