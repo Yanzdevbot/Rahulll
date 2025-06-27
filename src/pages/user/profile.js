@@ -130,7 +130,7 @@ export default function Profile() {
                                     disabled={!editName}
                                     required
                                 />
-                                <button type="button" className={`cursor-pointer bg-[#483AA0] p-3 px-5 rounded-full hover:bg-[#2c2c3a] ${editName ? 'text-[#2c2c3a]' : ''}`} onClick={() => {
+                                <button type="button" className={`cursor-pointer bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 p-3 px-5 rounded-full transition-all ${editName ? 'text-[#2c2c3a]' : ''}`} onClick={() => {
                                     if (editName) {
                                         handleSave();
                                     } else {
@@ -153,7 +153,7 @@ export default function Profile() {
                                     disabled={!editApikey}
                                     required
                                 />
-                                <button type="button" className={`cursor-pointer bg-[#483AA0] p-3 px-5 rounded-full hover:bg-[#2c2c3a] ${editApikey ? 'text-[#2c2c3a]' : ''}`} onClick={() => {
+                                <button type="button" className={`cursor-pointer bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 p-3 px-5 rounded-full transition-all ${editApikey ? 'text-[#2c2c3a]' : ''}`} onClick={() => {
                                     if (editApikey) {
                                         handleSave();
                                     } else {
