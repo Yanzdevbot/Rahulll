@@ -177,7 +177,7 @@ export default function Dashboard({ users, dataUser }) {
                 <h1 className="text-xl md:text-2xl lg:text-3xl mb-5 md:mb-10 font-bold">Upgrade <span className="text-[#483AA0]">User</span></h1>
                 <form onSubmit={handleSubmit} className="flex flex-col text-sm md:text-md lg:text-lg">
                     <div className="w-full md:w-1/2">
-                        <h1 className="mb-2">Search Username:</h1>
+                        <p>Search Username</p>
                         <input type="search" className="ring-1 hover:ring-[#483AA0] rounded-lg p-2 w-full mb-5 md:mb-10" placeholder="Search Username" required onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div>
@@ -219,7 +219,7 @@ export default function Dashboard({ users, dataUser }) {
                             </select>
                         </div>
                     </div>
-                    <button type="submit" className="bg-[#483AA0] hover:bg-[#483AA0]/80 rounded-lg p-2 w-full mb-5">Upgrade</button>
+                    <button type="submit" className="bg-[#483AA0] hover:bg-[#483AA0]/40 active:bg-[#483AA0]/60 rounded-lg p-2 w-full mb-5">Upgrade</button>
                 </form>
             </div>
             <Alert message={showAlert.message} visible={showAlert.visible} onClose={() => setShowAlert({ message: "", visible: false })} />
