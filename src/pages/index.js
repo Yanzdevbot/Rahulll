@@ -27,7 +27,7 @@ export default function Home() {
                 <meta property="og:image" content="/favicon.ico" />
                 <meta property="og:type" content="website" />
             </Head>
-            <div className="min-h-screen">
+            <div className="relative h-[100dvh]">
                 <div className="mx-10 md:mx-15 lg:mx-20 flex flex-col md:flex-row items-center justify-between md:gap-10 lg:gap-20">
                     <div className="mt-20 md:text-xl md:w-1/2">
                         <h1 className="font-bold mb-10 md:mb-15 lg:mb-20 text-md md:text-xl lg:text-2xl bg-[#483AA0] p-2 rounded-lg shadow-md inline-block">
@@ -76,7 +76,7 @@ export default function Home() {
                         <path d="M0,120 C300,80,900,160,1200,120 C1500,80,2100,160,2400,120 L2400,0 L0,0 Z" fill="#483AA0" />
                     </svg>
                 </div>
-                <div className="bg-[#483AA0] min-h-screen">
+                <div className="bg-[#483AA0] relative min-h-screen">
                     <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center">
                         <div className="flex flex-col items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10 md:size-15 lg:size-20 mt-10">
