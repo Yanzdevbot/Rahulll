@@ -30,7 +30,7 @@ const handler = async (req, res) => {
                 description: result.description,
                 view: result.viewCount,
                 size: result.size,
-                link: `${process.env.BASE_URL ? process.env.BASE_URL : 'localhost' + ':' + process.env.PORT}/uploads/${fileName}`,
+                link: `${process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT}/uploads/${fileName}`,
             }
         });
     } catch (error) {
