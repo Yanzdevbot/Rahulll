@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 
         if (!updated) return res.status(404).json({ message: "User not found" });
 
-        return res.status(200).json({ success: true, user: updated });
+        return res.status(200).json({ success: true, message: "User updated", user: updated });
     } catch (error) {
         console.error("Update error:", error);
         return res.status(500).json({ success: false, message: "Internal Server Error" });
