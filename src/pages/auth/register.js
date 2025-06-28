@@ -15,7 +15,10 @@ export default function Register() {
 
     const alert = (message, visible) => {
         setShowAlert({ message, visible });
-    }
+        if (visible) {
+            setTimeout(() => setShowAlert({ message: "", visible: false }), 3000); // Auto-hide alert after 3 seconds
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
