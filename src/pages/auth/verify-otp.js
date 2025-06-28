@@ -4,10 +4,14 @@ import { useRouter } from 'next/router';
 import Alert from '@/components/alert';
 
 export default function VerifyOTP() {
-    const [otp, setOtp] = useState('');
-    const [form, setForm] = useState(null);
     const [resendCooldown, setResendCooldown] = useState(30);
     const [showAlert, setShowAlert] = useState({ message: "", visible: false });
+    const [form, setForm] = useState({
+        name: '',
+        email: '',
+        password: '',
+        otp: ''
+    });
     const router = useRouter();
 
     const alert = (message, visible) => {
@@ -19,38 +23,47 @@ export default function VerifyOTP() {
 
     const handleVerify = async (e) => {
         e.preventDefault();
-        if (otp.length !== 6 || isNaN(otp)) {
+        if (form.otp.length !== 6 || isNaN(form.otp)) {
             return alert('OTP must be a 6-digit number', true);
         }
 
-        const res = await fetch('/api/auth/verify-otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...form, otp }),
-        });
+        try {
+            const res = await fetch('/api/auth/verify-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...form }),
+            });
 
-        if (res.ok) {
-            sessionStorage.removeItem('registerForm');
-            alert('Berhasil daftar!', true);
-            router.push('/auth/login');
-        } else {
-            alert('OTP salah atau expired', true);
+            if (res.ok) {
+                sessionStorage.removeItem('registerForm');
+                alert('Berhasil daftar!', true);
+                await delay(2000);
+                router.push('/auth/login');
+            } else {
+                alert('OTP salah atau expired', true);
+            }
+        } catch (error) {
+            alert('Terjadi kesalahan saat memverifikasi OTP', true);
         }
     };
 
     const handleResend = async () => {
         if (!form?.email || resendCooldown > 0) return; // Prevent resend if cooldown is active
-        const res = await fetch('/api/send-otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: form.email }),
-        });
+        try {
+            const res = await fetch('/api/send-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: form.email }),
+            });
 
-        if (res.ok) {
-            alert('OTP dikirim ulang', true);
-            setResendCooldown(30);
-        } else {
-            alert('Gagal kirim ulang OTP', true);
+            if (res.ok) {
+                alert('OTP dikirim ulang', true);
+                setResendCooldown(30);
+            } else {
+                alert('Gagal kirim ulang OTP', true);
+            }
+        } catch (error) {
+            alert('Terjadi kesalahan saat mengirim OTP', true);
         }
     };
 
@@ -81,8 +94,8 @@ export default function VerifyOTP() {
                         <form onSubmit={handleVerify}>
                             <input
                                 type="text"
-                                value={otp}
-                                onChange={(e) => setOtp(e.target.value)}
+                                value={form.otp}
+                                onChange={(e) => setForm({ ...form, otp: e.target.value })}
                                 className="w-full p-2 bg-[#2c2c3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#483AA0]"
                                 placeholder="Enter your OTP"
                                 required
@@ -97,7 +110,7 @@ export default function VerifyOTP() {
                                 <button 
                                     type='button' 
                                     onClick={handleResend} 
-                                    className={`mt-2 bg-invisible ${resendCooldown > 0 ? 'text-gray-500' : ''} hover:underline`} 
+                                    className={`mt-2 bg-transparent ${resendCooldown > 0 ? 'text-gray-500' : ''} hover:underline`} 
                                     disabled={resendCooldown > 0} // Disable button during cooldown
                                 >
                                     {resendCooldown === 0 ? 'Resend OTP' : `Resend OTP in ${resendCooldown} seconds`}
@@ -115,3 +128,5 @@ export default function VerifyOTP() {
         </div>
     );
 }
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
