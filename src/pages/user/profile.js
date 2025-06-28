@@ -11,6 +11,7 @@ export default function Profile() {
     const [editName, setEditName] = useState(false);
     const [editApikey, setEditApikey] = useState(false);
     const [showAlert, setShowAlert] = useState({ message: "", visible: false });
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { status } = useSession();
     const user = useUser();
@@ -23,30 +24,35 @@ export default function Profile() {
     };
 
     const handleSave = async () => {
-        try {
-            const result = await fetch("/api/user/update", {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: user.email,
-                    name: form.name,
-                    apikey: form.apikey,
-                }),
-            });
+        if (!editName && !editApikey) {
+            alert("No changes made", true);
+            return;
+        }
 
-            const data = await result.json();
+        setLoading(true);
 
-            if (data.success) {
-                setEditName(false);
-                setEditApikey(false);
-                alert("Profile updated!", true);
-                user.name = form.name;
-                user.apikey = form.apikey;
-            } else {
-                alert(`Update failed: ${data.message}`, true);
-            }
-        } catch (error) {
-            alert("An error occurred: " + error, true);
+        const result = await fetch("/api/user/update", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                email: user.email,
+                name: form.name,
+                apikey: form.apikey,
+            }),
+        });
+
+        setLoading(false);
+
+        const data = await result.json();
+
+        if (data.success) {
+            setEditName(false);
+            setEditApikey(false);
+            alert(data.message, true);
+            user.name = form.name;
+            user.apikey = form.apikey;
+        } else {
+            alert(data.message, true);
         }
     };
 
@@ -133,13 +139,13 @@ export default function Profile() {
                                     disabled={!editName}
                                     required
                                 />
-                                <button type="button" className={`cursor-pointer bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 p-3 px-5 rounded-full transition-all ${editName ? 'text-[#2c2c3a]' : ''}`} onClick={() => {
+                                <button disabled={loading} type="button" className={`cursor-pointer bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 p-3 px-5 rounded-full transition-all ${editName ? 'text-[#2c2c3a]' : ''}`} onClick={() => {
                                     if (editName) {
                                         handleSave();
                                     } else {
                                         setEditName(true);
                                     }
-                                }}>{editName ? 'Save' : 'Edit'}</button>
+                                }}>{loading ? 'Saving...' : editName ? 'Save' : 'Edit'}</button>
                             </div>
                         </div>
                         <div className="flex flex-col mb-5">
@@ -156,13 +162,13 @@ export default function Profile() {
                                     disabled={!editApikey}
                                     required
                                 />
-                                <button type="button" className={`cursor-pointer bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 p-3 px-5 rounded-full transition-all ${editApikey ? 'text-[#2c2c3a]' : ''}`} onClick={() => {
-                                    if (editApikey) {
+                                <button disabled={loading} type="button" className={`cursor-pointer bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 p-3 px-5 rounded-full transition-all ${editName ? 'text-[#2c2c3a]' : ''}`} onClick={() => {
+                                    if (editName) {
                                         handleSave();
                                     } else {
-                                        setEditApikey(true);
+                                        setEditName(true);
                                     }
-                                }}>{editApikey ? 'Save' : 'Edit'}</button>
+                                }}>{loading ? 'Saving...' : editName ? 'Save' : 'Edit'}</button>
                             </div>
                         </div>
                     </div>
