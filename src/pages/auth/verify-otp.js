@@ -6,7 +6,7 @@ import Alert from '@/components/alert';
 export default function VerifyOTP() {
     const [otp, setOtp] = useState('');
     const [form, setForm] = useState(null);
-    const [resendCooldown, setResendCooldown] = useState(0);
+    const [resendCooldown, setResendCooldown] = useState(30);
     const [showAlert, setShowAlert] = useState({ message: "", visible: false });
     const router = useRouter();
 
