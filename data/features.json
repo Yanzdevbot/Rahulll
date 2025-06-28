@@ -81,6 +81,15 @@
       "status": "true"
     },
     {
+      "name": "youtube-audio",
+      "method": "GET",
+      "folder": "downloader",
+      "desc": "Download audio from Youtube",
+      "query": "url",
+      "example": "?url=https://youtu.be/J_CFBjAyPWE?si=XqtlwFyxlauEUl9v",
+      "status": "true"
+    },
+    {
       "name": "aptoide-detail",
       "method": "GET",
       "folder": "internet",
