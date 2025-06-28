@@ -17,6 +17,7 @@
     "crypto": "^1.0.1",
     "file-type": "^21.0.0",
     "jsonwebtoken": "^9.0.2",
+    "mime-types": "^3.0.1",
     "mongoose": "^8.15.2",
     "next": "15.3.3",
     "next-auth": "^4.24.11",
