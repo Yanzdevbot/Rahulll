@@ -10,6 +10,7 @@ export default function Login() {
     const [form, setForm] = useState({ email: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
     const [showAlert, setShowAlert] = useState({ message: "", visible: false });
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { status } = useSession();
 
@@ -22,11 +23,16 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setLoading(true);
+
         const res = await signIn("credentials", {
             redirect: false,
             email: form.email,
             password: form.password,
         });
+
+        setLoading(false);
 
         if (res.ok) {
             router.push("/dashboard");
@@ -83,8 +89,8 @@ export default function Login() {
                                 <button type="button" className="absolute mt-2 right-2 text-sm text-gray-400 hover:text-gray-200" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</button>
                             </div>
                         </div>
-                        <button type="submit" className="w-full bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold">
-                            Sign In
+                        <button disabled={loading} type="submit" className="w-full bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold">
+                            {loading ? 'Loading...' : 'Sign In'}
                         </button>
                         <p className="text-gray-400 mt-4">Don&apos;t have an account? <Link href="/auth/register" className="text-[#483AA0] hover:underline">Sign Up</Link></p>
                     </form>
