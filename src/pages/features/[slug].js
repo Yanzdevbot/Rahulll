@@ -56,7 +56,7 @@ export default function Slug() {
                     </thead>
                     <tbody>
                         {folders.map((folder, index) => (
-                            <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <tr key={index} className="border-b bg-gray-800 border-gray-700 hover:bg-gray-600">
                                 <td className="py-2 px-2 text-center">{index + 1}</td>
                                 <td className="py-4 px-6">{folder.name}</td>
                                 <td className="py-4 px-6">{capitalize(folder.folder)}</td>
