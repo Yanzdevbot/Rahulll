@@ -18,7 +18,7 @@ export default function Profile() {
     const alert = (message, visible) => {
         setShowAlert({ message, visible });
         if (visible) {
-            setTimeout(() => setShowAlert({ message: "", visible: false }), 3000); // Auto-hide alert after 3 seconds
+            setTimeout(() => setShowAlert({ message: "", visible: false }), 3000); 
         }
     };
 
