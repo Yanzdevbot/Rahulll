@@ -12,10 +12,17 @@ export default function VerifyOTP() {
 
     const alert = (message, visible) => {
         setShowAlert({ message, visible });
-    }
+        if (visible) {
+            setTimeout(() => setShowAlert({ message: "", visible: false }), 3000); // Auto-hide alert after 3 seconds
+        }
+    };
 
     const handleVerify = async (e) => {
         e.preventDefault();
+        if (otp.length !== 6 || isNaN(otp)) {
+            return alert('OTP must be a 6-digit number', true);
+        }
+
         const res = await fetch('/api/auth/verify-otp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -32,7 +39,7 @@ export default function VerifyOTP() {
     };
 
     const handleResend = async () => {
-        if (!form?.email) return;
+        if (!form?.email || resendCooldown > 0) return; // Prevent resend if cooldown is active
         const res = await fetch('/api/send-otp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -49,14 +56,17 @@ export default function VerifyOTP() {
 
     useEffect(() => {
         const data = sessionStorage.getItem('registerForm');
-        if (!data) router.push('/auth/register');
-        else setForm(JSON.parse(data));
+        if (!data) {
+            router.push('/auth/register');
+        } else {
+            setForm(JSON.parse(data));
+        }
     }, [router]);
 
     useEffect(() => {
         if (resendCooldown === 0) return;
-        const i = setInterval(() => setResendCooldown((c) => c - 1), 1000);
-        return () => clearInterval(i);
+        const intervalId = setInterval(() => setResendCooldown((c) => c - 1), 1000);
+        return () => clearInterval(intervalId);
     }, [resendCooldown]);
 
     return (
@@ -78,10 +88,18 @@ export default function VerifyOTP() {
                                 required
                             />
                             <div className='flex flex-col'>
-                                <button type="submit" className="mt-4 bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold">
+                                <button 
+                                    type="submit" 
+                                    className="mt-4 bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold"
+                                >
                                     Verify
                                 </button>
-                                <button type='button' onClick={handleResend} className={`mt-2 bg-invisible ${resendCooldown > 0 ? 'text-gray-500' : ''} hover:underline `}>
+                                <button 
+                                    type='button' 
+                                    onClick={handleResend} 
+                                    className={`mt-2 bg-invisible ${resendCooldown > 0 ? 'text-gray-500' : ''} hover:underline`} 
+                                    disabled={resendCooldown > 0} // Disable button during cooldown
+                                >
                                     {resendCooldown === 0 ? 'Resend OTP' : `Resend OTP in ${resendCooldown} seconds`}
                                 </button>
                             </div>
@@ -89,7 +107,11 @@ export default function VerifyOTP() {
                     </div>
                 </div>
             </div>
-            <Alert message={showAlert.message} visible={showAlert.visible} onClose={() => setShowAlert({ message: "", visible: false })} />
+            <Alert 
+                message={showAlert.message} 
+                visible={showAlert.visible} 
+                onClose={() => setShowAlert({ message: "", visible: false })} 
+            />
         </div>
-    )
+    );
 }
