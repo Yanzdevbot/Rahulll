@@ -8,6 +8,8 @@ import { useSession } from "next-auth/react";
 
 export default function Register() {
     const [step, setStep] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [loadingResend, setLoadingResend] = useState(false);
     const [resendCooldown, setResendCooldown] = useState(30);
     const [showPassword, setShowPassword] = useState(false);
     const [form, setForm] = useState({ name: '', email: '', password: '', otp: '' });
@@ -26,17 +28,26 @@ export default function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        setLoading(true);
+
         const res = await fetch('/api/auth/send-otp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: form.email }),
         });
 
+        setLoading(false);
+
+        const data = await res.json();
+
         if (res.ok) {
-            alert('OTP telah dikirim ke email Anda. Silakan periksa kotak masuk Anda.', true);
+            const expiredAt = Date.now() + 5 * 60 * 1000;
+            sessionStorage.setItem('registerForm', JSON.stringify({ ...form, expiredAt }));
+
+            alert(data.message, true);
             setStep(2);
         } else {
-            alert('Gagal mengirim OTP', true);
+            alert(data.message, true);
         }
     };
 
@@ -46,47 +57,73 @@ export default function Register() {
             return alert('OTP harus berupa angka 6 digit', true);
         }
 
-        try {
-            const res = await fetch('/api/auth/verify-otp', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...form }),
-            });
+        setLoading(true);
 
-            const data = await res.json();
+        const res = await fetch('/api/auth/verify-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...form }),
+        });
 
-            if (res.ok) {
-                sessionStorage.removeItem('registerForm');
-                alert(data.message, true);
-                await delay(2000);
-                router.push('/auth/login');
-            } else {
-                alert(data.message, true);
-            }
-        } catch (error) {
-            alert('Terjadi kesalahan', true);
+        setLoading(false);
+
+        const data = await res.json();
+
+        if (res.ok) {
+            sessionStorage.removeItem('registerForm');
+            alert(data.message, true);
+            await delay(2000);
+            router.push('/auth/login');
+        } else {
+            alert(data.message, true);
         }
     };
 
     const handleResend = async () => {
         if (!form?.email || resendCooldown > 0) return;
-        try {
-            const res = await fetch('/api/auth/send-otp', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: form.email }),
-            });
-            const data = await res.json();
-            if (res.ok) {
-                alert(data.message, true);
-                setResendCooldown(30);
-            } else {
-                alert(data.message, true);
-            }
-        } catch (error) {
-            alert('Terjadi kesalahan', true);
+
+        setLoadingResend(true);
+
+        const res = await fetch('/api/auth/send-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: form.email }),
+        });
+
+        setLoadingResend(false);
+
+        const data = await res.json();
+
+        if (res.ok) {
+            const expiredAt = Date.now() + 5 * 60 * 1000;
+            sessionStorage.setItem('registerForm', JSON.stringify({ ...form, expiredAt }));
+
+            alert(data.message, true);
+            setResendCooldown(30);
+        } else {
+            alert(data.message, true);
         }
     };
+
+    const handleChangeEmail = () => {
+        sessionStorage.removeItem('registerForm');
+        setForm({ ...form, email: '' });
+        setStep(1);
+    };
+
+    useEffect(() => {
+        const storedForm = sessionStorage.getItem('registerForm');
+        if (storedForm) {
+            const parsed = JSON.parse(storedForm);
+
+            if (parsed.expiredAt && parsed.expiredAt > Date.now()) {
+                setForm(parsed);
+                setStep(2);
+            } else {
+                sessionStorage.removeItem('registerForm'); // hapus jika expired
+            }
+        }
+    }, []);
 
     useEffect(() => {
         if (status === "authenticated") {
@@ -161,8 +198,8 @@ export default function Register() {
                                         </button>
                                     </div>
                                 </div>
-                                <button type="submit" className="w-full bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold">
-                                    Sign Up
+                                <button disabled={loading} type="submit" className="w-full bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold">
+                                    {loading ? 'Loading...' : 'Sign Up'}
                                 </button>
                                 <p className="text-gray-400 mt-4">Already have an account? <Link href="/auth/login" className="text-[#483AA0] hover:underline">Sign In</Link></p>
                             </form>
@@ -178,6 +215,13 @@ export default function Register() {
                                 <p className="text-gray-400">Please Enter 6 digit OTP</p>
                             </div>
                             <div className="mb-4 flex flex-col">
+                                <p className="text-gray-400 mb-2">We have sent an OTP to <span className="text-[#483AA0]">{form.email}</span>. Please enter the OTP below to verify your email.</p>
+                                <button 
+                                    onClick={() => handleChangeEmail()} 
+                                    className="text-[#483AA0] hover:underline mb-2 text-left"
+                                >
+                                    Change Email?
+                                </button>
                                 <form onSubmit={handleVerify}>
                                     <input
                                         type="text"
@@ -189,18 +233,19 @@ export default function Register() {
                                     />
                                     <div className='flex flex-col'>
                                         <button 
-                                            type="submit" 
+                                            type="submit"
+                                            disabled={loading} 
                                             className="mt-4 bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold"
                                         >
-                                            Verify
+                                            {loading ? 'Loading...' : 'Verify OTP'}
                                         </button>
                                         <button 
-                                            type='button' 
+                                            type='button'
                                             onClick={handleResend} 
                                             className={`mt-2 bg-transparent ${resendCooldown > 0 ? 'text-gray-500' : ''} hover:underline`} 
-                                            disabled={resendCooldown > 0} // Disable button during cooldown
+                                            disabled={loadingResend || resendCooldown > 0}
                                         >
-                                            {resendCooldown === 0 ? 'Resend OTP' : `Resend OTP in ${resendCooldown} seconds`}
+                                            {loadingResend ? 'Loading...' : resendCooldown === 0 ? 'Resend OTP' : `Resend OTP in ${resendCooldown} seconds`}
                                         </button>
                                     </div>
                                 </form>
