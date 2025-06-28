@@ -100,16 +100,16 @@ export default function Home() {
                         </svg>
                         <h1 className="text-lg md:text-xl lg:text-2xl font-bold">Pricing</h1>
                         <p className="text-center mt-2 text-gray-400 m-5">Need an API? We&apos;re here for you. Fast, reliable, and easy-to-use APIs to power your applications.</p>
-                        <div className="w-full overflow-x-auto snap-x snap-mandatory flex-col items-center block md:flex">
+                        <div className="mb-10 w-full overflow-x-auto snap-x snap-mandatory flex-col items-center block md:flex">
                             <div className="flex space-x-4 p-4 w-max md:gap-10 lg:gap-15">
                                 {price.map((item, index) => {
                                     return (
-                                        <Link key={index} href={item.link} target="_blank" className="active:scale-95 transition-transform duration-300 ease-in-out hover:-translate-y-3 p-10 flex flex-col items-center justify-center backdrop-blur-sm bg-[#1f1f2e]/60 rounded-md snap-center">
+                                        <Link key={index} href={item.link} target="_blank" className="active:scale-95 transition-transform duration-300 ease-in-out hover:-translate-y-3 py-15 px-6 flex flex-col items-center justify-center backdrop-blur-sm bg-[#1f1f2e]/60 rounded-md snap-center w-[250px] md:w-[300px] lg:w-[350px] shadow-lg hover:shadow-xl">
                                             <h2 className="text-lg md:text-xl lg:text-2xl mb-2">{item.title}</h2>
                                             <p className="text-gray-400 text-md md:text-lg lg:text-xl">Rp. {formatNumber(item.price)}</p>
                                             <ul className="mt-4 flex flex-col items-center">
                                                 {item.features.map((feature, index) => (
-                                                <li key={index} className="mb-2 text-gray-400 text-center text-sm md:text-md lg:text-lg">{feature}</li>
+                                                    <li key={index} className="mb-1 text-gray-400 text-center text-sm md:text-md lg:text-lg">{feature}</li>
                                                 ))}
                                             </ul>
                                     </Link>
