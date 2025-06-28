@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import dbConnect from '../../../../lib/mongodb';
 import Otp from '../../../../models/otp';
+import User from '../../../../models/user';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).end();
@@ -12,6 +13,12 @@ export default async function handler(req, res) {
     await dbConnect();
 
     try {
+        // Cek apakah email sudah terdaftar
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email sudah terdaftar' });
+        }
+
         await Otp.deleteMany({ email });
 
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
