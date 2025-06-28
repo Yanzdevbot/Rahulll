@@ -14,7 +14,6 @@ const handler = async (req, res) => {
     }
 
     const filePath = path.join(process.cwd(), 'tmp', filename);
-    console.log('Full file path:', filePath);
 
     try {
         await fs.promises.access(filePath);
