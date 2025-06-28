@@ -20,7 +20,7 @@ const handler = async (req, res) => {
         const result = await downloader.ytMp3Downloader(url);
         const audioBuffer = await fetch(result.downloadUrl).then(res => res.buffer());
         const fileName = `ytaudio-${Date.now()}.mp3`;
-        fs.writeFileSync(`./public/uploads/${fileName}`, audioBuffer);
+        fs.writeFileSync(`./tmp/${fileName}`, audioBuffer);
         return res.status(200).json({
             status: true,
             message: 'Success',
@@ -30,7 +30,7 @@ const handler = async (req, res) => {
                 description: result.description,
                 view: result.viewCount,
                 size: result.size,
-                link: `${process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT}/uploads/${fileName}`,
+                link: `${process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT}/api/uploads?filename=${fileName}`,
             }
         });
     } catch (error) {
