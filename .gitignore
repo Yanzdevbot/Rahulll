@@ -42,6 +42,3 @@ next-env.d.ts
 
 # tmp files
 /tmp
-
-# uploads
-/public/uploads
