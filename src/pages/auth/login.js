@@ -16,7 +16,7 @@ export default function Login() {
     const alert = (message, visible) => {
         setShowAlert({ message, visible });
         if (visible) {
-            setTimeout(() => setShowAlert({ message: "", visible: false }), 3000); // Auto-hide alert after 3 seconds
+            setTimeout(() => setShowAlert({ message: "", visible: false }), 3000);
         }
     };
 
@@ -80,7 +80,7 @@ export default function Login() {
                                     onChange={(e) => setForm({ ...form, password: e.target.value })}
                                     required
                                 />
-                                <button type="button" className="absolute mt-2 right-2" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</button>
+                                <button type="button" className="absolute mt-2 right-2 text-sm text-gray-400 hover:text-gray-200" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</button>
                             </div>
                         </div>
                         <button type="submit" className="w-full bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 px-4 py-2 rounded-lg shadow-md transition duration-300 font-bold">
