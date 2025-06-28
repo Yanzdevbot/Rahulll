@@ -1,4 +1,4 @@
-import ytSearch from "../../../../../lib/scrapers/ytsearch";
+import ytSearch from "../../../../../lib/scrapers/youtube-search";
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
 
