@@ -461,7 +461,7 @@ export class CharacterAI {
 
     // authentication
     async authenticate(sessionToken: string) {
-        // this.checkAndThrow(CheckAndThrow.RequiresNoAuthentication);
+        this.checkAndThrow(CheckAndThrow.RequiresNoAuthentication);
         
         if (sessionToken.startsWith("Token "))
             sessionToken = sessionToken.substring("Token ".length, sessionToken.length);
