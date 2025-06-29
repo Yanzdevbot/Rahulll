@@ -20,10 +20,15 @@ const handler = async (req, res) => {
                 message: 'Not Found'
             });
         }
+        const sanitizedResult = result.map(character => ({
+            id: character.characterId,
+            name: character.displayName,
+            greeting: character.greeting,
+        }));
         return res.status(200).json({
             status: true,
             message: 'Success',
-            result
+            result: sanitizedResult
         });
     } catch (error) {
         console.error(error);
