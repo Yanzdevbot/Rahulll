@@ -36,9 +36,9 @@ const handler = async (req, res) => {
 
 handler.method = 'GET';
 handler.folder = 'ai';
-handler.desc = 'Search CharacterAI Characters';
-handler.query = "query";
-handler.example = "?query=elaina";
+handler.desc = 'Send a message to a Character AI character';
+handler.query = "characterId, message";
+handler.example = "?characterId=8ZqYqM80esXmkKLiR_v-bokBToTARK51XRYIAfRgNoI&message=Hello%20there";
 handler.status = true;
 
 export default handler
