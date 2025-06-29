@@ -23,7 +23,7 @@ const handler = async (req, res) => {
         return res.status(200).json({
             status: true,
             message: 'Success',
-            result
+            result: result.content
         });
     } catch (error) {
         console.error(error);
