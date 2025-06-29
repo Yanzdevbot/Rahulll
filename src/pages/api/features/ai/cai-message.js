@@ -1,4 +1,4 @@
-import { sendMessage } from "../../../../../lib/scrapers/characterai";
+import { startChatSession, sendMessage } from "../../../../../lib/scrapers/characterai";
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
 
@@ -13,7 +13,8 @@ const handler = async (req, res) => {
                 message: 'Bad Request'
             });
         }
-        const result = await sendMessage(characterId, message);
+        const session = await startChatSession(characterId);
+        const result = await sendMessage(session, message);
         if (!result) {
             return res.status(404).json({
                 status: false,
