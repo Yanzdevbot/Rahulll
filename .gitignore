@@ -2,8 +2,6 @@
 
 # dependencies
 /node_modules
-/modules/node_characterai/node_modules
-/modules/node_characterai/dist
 /.pnp
 .pnp.*
 .yarn/*
