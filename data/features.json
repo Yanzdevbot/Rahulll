@@ -9,6 +9,24 @@
   ],
   "features": [
     {
+      "name": "characterai-message",
+      "method": "GET",
+      "folder": "ai",
+      "desc": "Search CharacterAI Characters",
+      "query": "query",
+      "example": "?query=elaina",
+      "status": "true"
+    },
+    {
+      "name": "characterai-search",
+      "method": "GET",
+      "folder": "ai",
+      "desc": "Search CharacterAI Characters",
+      "query": "query",
+      "example": "?query=elaina",
+      "status": "true"
+    },
+    {
       "name": "upscale",
       "method": "GET",
       "folder": "ai",
