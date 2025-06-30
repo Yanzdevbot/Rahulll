@@ -1,6 +1,6 @@
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
-import { getImage } from "../../../../../lib/func";
+import { downloadFile } from '../../../../../lib/downloadFile';
 
 const handler = async (req, res) => {
     if (req.method !== 'GET') return res.status(405).end();
@@ -14,8 +14,9 @@ const handler = async (req, res) => {
             });
         }
         const imageUrl = `https://brat.caliphdev.com/api/brat?text=${text}`
+        const download = await downloadFile(imageUrl);
         res.setHeader('Content-Type', 'image/jpeg');
-        res.send(await getImage(imageUrl));
+        res.send(download.data);
     } catch (error) {
         console.error(error);
         return res.status(500).json({
