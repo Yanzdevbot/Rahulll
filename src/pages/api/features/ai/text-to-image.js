@@ -26,7 +26,7 @@ const handler = async (req, res) => {
             status: true,
             message: 'Image generated successfully',
             result: {
-                url: process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT + download.filename
+                url: (process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT) + download.filename
             }
         });
     } catch (error) {
