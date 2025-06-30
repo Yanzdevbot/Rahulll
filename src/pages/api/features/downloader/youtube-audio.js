@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
 import Downloader from "../../../../../lib/scrapers/youtube-audio";
+import { downloadFile } from "../../../../../lib/downloadFile";
 
 const downloader = new Downloader();
 
@@ -18,9 +19,7 @@ const handler = async (req, res) => {
             });
         }
         const result = await downloader.ytMp3Downloader(url);
-        const audioBuffer = await fetch(result.downloadUrl).then(res => res.buffer());
-        const fileName = `ytaudio-${Date.now()}.mp3`;
-        fs.writeFileSync(`./tmp/${fileName}`, audioBuffer);
+        const download = await downloadFile(result.downloadUrl, true);
         return res.status(200).json({
             status: true,
             message: 'Success',
@@ -28,9 +27,9 @@ const handler = async (req, res) => {
                 title: result.title,
                 thumbnail: result.thumbnail,
                 description: result.description,
-                view: result.viewCount,
+                view: formatNumber(result.viewCount),
                 size: result.size,
-                link: `${process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT}/api/uploads?filename=${fileName}`,
+                link: process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT + download.filename
             }
         });
     } catch (error) {
@@ -51,3 +50,7 @@ handler.status = true;
 
 export default handler
 
+function formatNumber(number) {
+    number = parseInt(number);
+    return number.toLocaleString('id-ID');
+}
