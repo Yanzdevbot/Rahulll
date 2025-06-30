@@ -14,8 +14,7 @@ export default async function handler(req, res) {
     const mime = fileType?.mime || 'application/octet-stream';
 
     res.setHeader('Content-Type', mime);
-
-    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Content-Disposition', `inline; filename="${filename}"`);
 
     const stream = fs.createReadStream(filePath);
     stream.pipe(res);
