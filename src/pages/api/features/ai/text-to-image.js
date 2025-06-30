@@ -1,6 +1,6 @@
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
-import { getImage } from '../../../../../lib/func';
+import { downloadFile } from '../../../../../lib/downloadFile';
 import fetch from 'node-fetch';
 
 const handler = async (req, res) => {
@@ -21,8 +21,14 @@ const handler = async (req, res) => {
                 message: 'Failed to process image'
             });
         }
-        res.setHeader('Content-Type', 'image/jpeg');
-        res.send(await getImage(result.base64));
+        const download = await downloadFile(result.base64, true);
+        return res.status(200).json({
+            status: true,
+            message: 'Image generated successfully',
+            result: {
+                url: process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT + download.filename
+            }
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({
