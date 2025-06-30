@@ -29,7 +29,7 @@ const handler = async (req, res) => {
                 description: result.description,
                 view: formatNumber(result.viewCount),
                 size: result.size,
-                link: process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT + download.filename
+                link: (process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT) + download.filename
             }
         });
     } catch (error) {
