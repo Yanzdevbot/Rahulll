@@ -1,6 +1,8 @@
-import aptoide from '../../../../../lib/scrapers/aptoide';
+import Aptoide from '../../../../../lib/scrapers/aptoide';
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
+
+const aptoide = new Aptoide();
 
 const handler = async (req, res) => {
     if (req.method !== 'GET') return res.status(405).end();
