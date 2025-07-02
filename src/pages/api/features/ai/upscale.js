@@ -1,7 +1,9 @@
-import pxpic from "../../../../../lib/scrapers/pxpic";
+import Pxpic from "../../../../../lib/scrapers/pxpic";
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
 import { downloadFile } from "../../../../../lib/downloadFile";
+
+const pxpic = new Pxpic();
 
 const handler = async (req, res) => {
     if (req.method !== 'GET') return res.status(405).end();
