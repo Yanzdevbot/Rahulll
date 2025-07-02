@@ -2,10 +2,10 @@ import fs, { link } from "fs";
 import fetch from "node-fetch";
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
-import Downloader from "../../../../../lib/scrapers/youtube-audio";
+import Youtube from "../../../../../lib/scrapers/youtube-audio";
 import { downloadFile } from "../../../../../lib/downloadFile";
 
-const downloader = new Downloader();
+const youtube = new Youtube();
 
 const handler = async (req, res) => {
     if (req.method !== 'GET') return res.status(405).end();
@@ -18,7 +18,7 @@ const handler = async (req, res) => {
                 message: 'Bad Request'
             });
         }
-        const result = await downloader.ytMp3Downloader(url);
+        const result = await youtube.downloadAudio(url);
         const download = await downloadFile(result.downloadUrl, true);
         return res.status(200).json({
             status: true,
