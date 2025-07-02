@@ -1,6 +1,8 @@
-import otakudesu from "../../../../../lib/scrapers/otakudesu"
+import Otakudesu from "../../../../../lib/scrapers/otakudesu"
 import checkApiKey from '../../../../../lib/middleware/checkApikey';
 import runMiddleware from '../../../../../lib/runMiddleware';
+
+const otakudesu = new Otakudesu();
 
 const handler = async (req, res) => {
     if (req.method !== 'GET') return res.status(405).end();
