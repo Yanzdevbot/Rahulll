@@ -176,54 +176,62 @@ export default function Dashboard({ users, dataUser }) {
                     </div>  
                 </div>
             </div>
-            <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg mb-5 m-5 md:m-10 flex flex-col items-center">
-                <h1 className="text-xl md:text-2xl lg:text-3xl mb-5 md:mb-10 font-bold">Upgrade <span className="text-[#483AA0]">User</span></h1>
-                <form onSubmit={handleSubmit} className="flex flex-col text-sm md:text-md lg:text-lg">
-                    <div className="w-full md:w-1/2">
-                        <p>Search Username</p>
-                        <input type="search" className="ring-1 hover:ring-[#483AA0] rounded-lg p-2 w-full mb-5 md:mb-10" placeholder="Search Username" required onChange={(e) => setSearch(e.target.value)} />
-                    </div>
-                    <div>
-                        <p>Pilih Email</p>
-                        <select value={form.email} className="ring-1 hover:bg-[#483AA0] focus:bg-[#483AA0] hover:ring-[#483AA0] rounded-lg p-2 w-full mb-5 md:mb-10" onChange={(e) => setForm({...form, email: e.target.value})}>
-                            <option value="">Pilih Email</option>
-                            {email.map((user, index) => {
-                                return (
-                                    <option key={index} value={user}>{user}</option>
-                                )
-                            })}
-                    </select>
-                    </div>
-                    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-10 lg:gap-15 mb-5 md:mb-10">
-                        <div>
-                            <p>Pilih Status</p>
-                            <select value={form.status} className="ring-1 hover:bg-[#483AA0] focus:bg-[#483AA0] hover:ring-[#483AA0] rounded-lg p-2 w-full" onChange={(e) => setForm({...form, status: e.target.value})}>
-                                <option value="premium">Premium</option>
-                                <option value="vip">Vip</option>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mx-5 md:mx-10">
+                <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg mb-5 flex flex-col items-center">
+                    <h1 className="text-md md:text-lg lg:text-xl mb-5 md:mb-10 font-bold">
+                        Upgrade <span className="text-[#483AA0]">User</span>
+                    </h1>
+                    <form onSubmit={handleSubmit} className="flex flex-col text-sm md:text-md w-full max-w-xl">
+                        <div className="mb-5 md:mb-10">
+                        <p className="mb-1">Search Username</p>
+                        <input
+                            type="search"
+                            className="ring-1 hover:ring-[#483AA0] rounded-lg p-2 w-full"
+                            placeholder="Search Username"
+                            required
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                        </div>
+
+                        <div className="mb-5 md:mb-10">
+                            <p className="mb-1">Pilih Email</p>
+                            <select value={form.email} className="ring-1 hover:bg-[#483AA0] focus:bg-[#483AA0] hover:ring-[#483AA0] rounded-lg p-2 w-full" onChange={(e) => setForm({ ...form, email: e.target.value })}>
+                                <option value="">Pilih Email</option>
+                                {email.map((user, index) => (
+                                    <option key={index} value={user}>
+                                        {user}
+                                    </option>
+                                ))}
                             </select>
                         </div>
-                        <div>
-                            <p>Pilih Durasi</p>
-                            <select value={form.month} className="ring-1 hover:bg-[#483AA0] focus:bg-[#483AA0] hover:ring-[#483AA0] rounded-lg p-2 w-full" onChange={(e) => setForm({...form, month: parseInt(e.target.value)})}>
-                                <option value="1">1 Bulan</option>
-                                <option value="2">2 Bulan</option>
-                                <option value="3">3 Bulan</option>
-                                <option value="4">4 Bulan</option>
-                                <option value="5">5 Bulan</option>
-                                <option value="6">6 Bulan</option>
-                                <option value="7">7 Bulan</option>
-                                <option value="8">8 Bulan</option>
-                                <option value="9">9 Bulan</option>
-                                <option value="10">10 Bulan</option>
-                                <option value="11">11 Bulan</option>
-                                <option value="12">12 Bulan</option>
-                                <option value="13">13 Bulan</option>
-                                <option value="14">14 Bulan</option>
-                            </select>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5 md:mb-10">
+                            <div>
+                                <p className="mb-1">Pilih Status</p>
+                                <select value={form.status} className="ring-1 hover:bg-[#483AA0] focus:bg-[#483AA0] hover:ring-[#483AA0] rounded-lg p-2 w-full" onChange={(e) => setForm({ ...form, status: e.target.value })}>
+                                    <option value="premium">Premium</option>
+                                    <option value="vip">Vip</option>
+                                </select>
+                            </div>
+                            <div>
+                                <p className="mb-1">Pilih Durasi</p>
+                                <select value={form.month} className="ring-1 hover:bg-[#483AA0] focus:bg-[#483AA0] hover:ring-[#483AA0] rounded-lg p-2 w-full" onChange={(e) =>
+                                    setForm({ ...form, month: parseInt(e.target.value) })
+                                }>
+                                    {[...Array(14)].map((_, idx) => (
+                                        <option key={idx + 1} value={idx + 1}>
+                                            {idx + 1} Bulan
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <button type="submit" className="bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 rounded-lg p-2 w-full mb-5 transition duration-300">Upgrade</button>
-                </form>
+
+                        <button type="submit" className="bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 rounded-lg p-2 w-full transition duration-300">
+                            Upgrade
+                        </button>
+                    </form>
+                </div>
             </div>
             <Alert message={showAlert.message} visible={showAlert.visible} onClose={() => setShowAlert({ message: "", visible: false })} />
         </div>
