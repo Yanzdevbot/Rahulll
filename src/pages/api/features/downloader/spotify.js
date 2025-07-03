@@ -38,7 +38,7 @@ const handler = async (req, res) => {
         return res.status(200).json({
             status: true,
             message: 'Success',
-            result: { ...result.album, audio: (process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT) + audioBuffer.filename },
+            result: { ...result, audio: (process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : 'localhost' + ':' + process.env.PORT) + audioBuffer.filename },
         });
     } catch (error) {
         console.error(error);
