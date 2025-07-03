@@ -156,17 +156,30 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-            <div className="w-full flex flex-col items-center px-5 md:px-10">
-                <div className="bg-[#1f1f2e] rounded-lg shadow-lg mb-5 w-full">
-                    <h1 className="text-2xl md:text-3xl lg:text-4xl text-[#483AA0] p-5 font-bold">S&K</h1>
-                    {rules.map((rule, index) => (
-                        <div key={index} className={`px-5 pb-3 ${index + 1 === rules.length ? "pb-6" : ""}`}>
-                            <p className="text-gray-400 text-sm lg:text-md">{index + 1}. {rule}</p>
-                        </div>
-                    ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mx-5 md:mx-10">
+                <div className="w-full flex flex-col items-center">
+                    <div className="bg-[#1f1f2e] rounded-lg shadow-lg mb-5 w-full">
+                        <h1 className="text-xl md:text-2xl lg:text-3xl text-[#483AA0] p-5 font-bold">S&K</h1>
+                        {rules.map((rule, index) => (
+                            <div key={index} className={`px-5 pb-3 ${index + 1 === rules.length ? "pb-6" : ""}`}>
+                                <p className="text-gray-400 text-sm lg:text-md">{index + 1}. {rule}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="w-full flex flex-col items-center">
+                    <div className="bg-[#1f1f2e] rounded-lg shadow-lg mb-5 w-full">
+                        <h1 className="text-xl md:text-2xl lg:text-3xl text-[#483AA0] p-5 font-bold">Thanks to</h1>
+                        {thanks.map((rule, index) => (
+                            <div key={index} className={`px-5 pb-3 ${index + 1 === thanks.length ? "pb-6" : ""}`}>
+                                <p className="text-gray-400 text-sm lg:text-md">{index + 1}. {rule}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
+        
     );
 }
 
@@ -175,10 +188,17 @@ function formatNumber(number) {
 }
 
 const rules = [
-    "Jangan flooding requests.",
-    "Membuat banyak akun pada IP yang sama maka IP otomatis akan di block.",
-    "Owner dapat sewaktu waktu mengubah ketentuan di website ini, demi menjaga kualitas website.",
-    "Dilarang keras untuk menyebarkan apikey Anda, jika ketahuan. InsyaAllah akan di block :)",
-    "Jangan ditembak atuh, sakit.",
-    "Owner tidak bertanggung jawab atas apa yang Anda lakukan dalam penggunaan website ini."
+    "Gunakan API key Anda dengan bijak dan rahasia.",
+    "Jangan menyalahgunakan API untuk aktivitas yang merugikan.",
+    "Perhatikan batasan rate limit untuk setiap jenis akun.",
+    "Laporkan bug atau masalah lainnya kepada tim developer.",
+    "Jangan menggunakan API untuk aktivitas ilegal.",
+    "Pihak pengelola berhak untuk memblokir akses jika ditemukan pelanggaran."
+]
+
+const thanks = [
+    "Terima kasih kepada Allah SWT atas berkat-Nya.",
+    "Terima kasih kepada semua yang telah mendukung proyek ini.",
+    "Khususnya kepada para pengguna yang telah memberikan masukan dan saran.",
+    "Kami berkomitmen untuk terus meningkatkan layanan ini demi kepuasan Anda."
 ]
