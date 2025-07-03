@@ -99,6 +99,15 @@
       "status": "true"
     },
     {
+      "name": "spotify",
+      "method": "GET",
+      "folder": "downloader",
+      "desc": "Download Audio from Spotify",
+      "query": "url",
+      "example": "?url=https://open.spotify.com/track/65fpYBrI8o2cfrwf2US4gq",
+      "status": "true"
+    },
+    {
       "name": "tiktok",
       "method": "GET",
       "folder": "downloader",
@@ -168,6 +177,15 @@
       "desc": "Make text to sticker meme",
       "query": "atas, bawah, url",
       "example": "?atas=Hello%20World&bawah=RyHar&url=https://pomf2.lain.la/f/v53tu30l.jpg",
+      "status": "true"
+    },
+    {
+      "name": "spotify-search",
+      "method": "GET",
+      "folder": "search",
+      "desc": "Search Audio from Spotify",
+      "query": "query",
+      "example": "?query=mantra%20hujan",
       "status": "true"
     },
     {
