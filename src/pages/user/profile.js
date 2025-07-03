@@ -8,8 +8,7 @@ import { useRouter } from "next/router";
 
 export default function Profile() { 
     const [form, setForm] = useState({ name: "", apikey: "" });
-    const [editName, setEditName] = useState(false);
-    const [editApikey, setEditApikey] = useState(false);
+    const [edit, setEdit] = useState(false);
     const [showAlert, setShowAlert] = useState({ message: "", visible: false });
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -24,7 +23,7 @@ export default function Profile() {
     };
 
     const handleSave = async () => {
-        if (!editName && !editApikey) {
+        if (!edit) {
             alert("No changes made", true);
             return;
         }
@@ -46,8 +45,7 @@ export default function Profile() {
         const data = await result.json();
 
         if (data.success) {
-            setEditName(false);
-            setEditApikey(false);
+            setEdit(false);
             alert(data.message, true);
             user.name = form.name;
             user.apikey = form.apikey;
@@ -84,7 +82,7 @@ export default function Profile() {
             <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg m-5 md:m-10 flex flex-col items-center scrollbar-hidden">
                 <h1 className="text-xl md:text-2xl lg:text-3xl mb-2 font-bold">User <span className="text-[#483AA0]">Profile</span></h1>
                 <div className="mt-8">
-                    <div className="mb-5 md:mb-10 grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="mb-5 md:mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
                             <p className="text-gray-400 font-bold text-sm md:text-md">Name:</p>
                             <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{user.name}</p>
@@ -112,65 +110,64 @@ export default function Profile() {
                             <p className="text-gray-400 font-bold text-sm md:text-md">Status User:</p>
                             <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{user.status}</p>
                         </div>
-                        {/premium|vip/i.test(user.status) && (
-                            <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
-                                <p className="text-gray-400 font-bold text-sm md:text-md">Expired:</p>
-                                <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{getRemainingTime(user.endDate)}</p>
-                            </div>
-                        )}
+                        <div className="bg-[#272149] rounded-lg p-5 px-10 shadow-lg">
+                            <p className="text-gray-400 font-bold text-sm md:text-md">Expired:</p>
+                            <p className="text-md md:text-lg lg:text-xl font-bold overflow-x-auto">{/premium|vip/i.test(user.status) ? getRemainingTime(user.endDate) : "No Subscription"}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg m-5 md:m-10 flex flex-col items-center">
-                <h1 className="text-xl md:text-2xl lg:text-3xl mb-2 font-bold">Edit <span className="text-[#483AA0]">Profile</span></h1>
-                <div className="mt-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-20">
-                        <div className="flex flex-col">
-                            <label className="block text-sm md:text-md lg:text-xl mb-2" htmlFor="name">Username</label>
-                            <div className="flex flex-row">
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    className="w-full p-2 bg-[#2c2c3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#483AA0] mr-5"
-                                    placeholder="Enter your name"
-                                    value={form.name}
-                                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                                    disabled={!editName}
-                                    required
-                                />
-                                <button disabled={loading} type="button" className={`cursor-pointer bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 p-3 px-5 rounded-full transition-all ${editName ? 'text-[#2c2c3a]' : ''}`} onClick={() => {
-                                    if (editName) {
-                                        handleSave();
-                                    } else {
-                                        setEditName(true);
-                                    }
-                                }}>{loading ? 'Saving...' : editName ? 'Save' : 'Edit'}</button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mx-5 md:mx-10 mb-10">
+                <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg flex flex-col items-center">
+                    <h1 className="text-xl md:text-2xl lg:text-3xl mb-2 font-bold">Edit <span className="text-[#483AA0]">Profile</span></h1>
+                    <div className="mt-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-20">
+                            <div className="flex flex-col">
+                                <label className="block text-sm md:text-md lg:text-xl mb-2" htmlFor="name">Username</label>
+                                <div className="flex flex-row">
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        className="w-full p-2 bg-[#2c2c3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#483AA0]"
+                                        placeholder="Enter your name"
+                                        value={form.name}
+                                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                                        disabled={!edit}
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex flex-col mb-5">
+                                <label className="block text-sm md:text-md lg:text-xl mb-2" htmlFor="apikey">API Key</label>
+                                <div className="flex flex-row">
+                                    <input
+                                        type="text"
+                                        id="apikey"
+                                        name="apikey"
+                                        className="w-full p-2 bg-[#2c2c3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#483AA0]"
+                                        placeholder="Enter your apikey"
+                                        value={form.apikey}
+                                        onChange={(e) => setForm({ ...form, apikey: e.target.value })}
+                                        disabled={!edit}
+                                        required
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className="flex flex-col mb-5">
-                            <label className="block text-sm md:text-md lg:text-xl mb-2" htmlFor="apikey">API Key</label>
-                            <div className="flex flex-row">
-                                <input
-                                    type="text"
-                                    id="apikey"
-                                    name="apikey"
-                                    className="w-full p-2 bg-[#2c2c3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#483AA0] mr-5"
-                                    placeholder="Enter your apikey"
-                                    value={form.apikey}
-                                    onChange={(e) => setForm({ ...form, apikey: e.target.value })}
-                                    disabled={!editApikey}
-                                    required
-                                />
-                                <button disabled={loading} type="button" className={`cursor-pointer bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 p-3 px-5 rounded-full transition-all ${editName ? 'text-[#2c2c3a]' : ''}`} onClick={() => {
-                                    if (editName) {
-                                        handleSave();
-                                    } else {
-                                        setEditName(true);
-                                    }
-                                }}>{loading ? 'Saving...' : editName ? 'Save' : 'Edit'}</button>
-                            </div>
-                        </div>
+                    </div>
+                    <button disabled={loading} type="button" className={`h-[50px] w-1/2 mt-5 cursor-pointer bg-[#483AA0] hover:bg-[#372a7a] hover:scale-105 active:scale-95 p-3 px-5 rounded-full transition-all ${edit ? 'text-[#2c2c3a]' : ''}`} onClick={() => {
+                        if (edit) {
+                            handleSave();
+                        } else {
+                            setEdit(true);
+                        }
+                    }}>{loading ? 'Saving...' : edit ? 'Save' : 'Edit'}</button>
+                </div>
+                <div className="bg-[#1f1f2e] rounded-lg p-5 shadow-lg flex flex-col items-center">
+                    <h1 className="text-xl md:text-2xl lg:text-3xl mb-2 font-bold">Subscription <span className="text-[#483AA0]">History</span></h1>
+                    <div className="flex flex-col items-center justify-center mt-8">
+                        <p>Coming soon...</p>
                     </div>
                 </div>
             </div>
